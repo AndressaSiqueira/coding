@@ -18,7 +18,6 @@ permissions:
   id-token: write
 
 env:
-  # Azure Configuration - Set these in repository secrets
   AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
   AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
@@ -28,7 +27,6 @@ env:
   AZURE_AI_MODEL_DEPLOYMENT_NAME: ${{ secrets.AZURE_AI_MODEL_DEPLOYMENT_NAME }}
 
 jobs:
-  # Gate: Ensure evaluation passed before deploying
   check-evaluation:
     name: Verify Evaluation Passed
     runs-on: ubuntu-latest
@@ -41,7 +39,6 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            // For push events, check if the evaluation workflow passed
             if (context.eventName === 'push') {
               const { data: runs } = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
@@ -53,8 +50,8 @@ jobs:
               });
               
               if (runs.workflow_runs.length === 0) {
-                core.warning('No evaluation run found for this commit. Proceeding with caution.');
-                core.setOutput('passed', 'true');  // Allow if no eval exists
+                core.warning('No evaluation run found for this commit. Proceeding.');
+                core.setOutput('passed', 'true');
                 return;
               }
               
@@ -66,7 +63,6 @@ jobs:
                 core.setFailed(`Evaluation workflow did not pass: ${latestRun.conclusion}`);
               }
             } else {
-              // Manual dispatch - allow
               core.setOutput('passed', 'true');
             }
 
@@ -88,83 +84,95 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Install Azure Developer CLI
-        run: |
-          curl -fsSL https://aka.ms/install-azd.sh | bash
-          echo "$HOME/.azd/bin" >> $GITHUB_PATH
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-      - name: Install azd AI extension
+      - name: Install Azure AI SDK
         run: |
-          export PATH="$HOME/.azd/bin:$PATH"
-          azd extension install ai --accept-terms || true
-          echo "Azure Developer CLI AI extension ready"
+          pip install azure-ai-projects azure-identity
 
       - name: Read Agent Configuration
         id: config
         run: |
-          # Extract agent configuration
-          AGENT_NAME=$(grep '^name:' foundry-agent/agent.yaml | cut -d' ' -f2 | tr -d '"')
+          AGENT_NAME=$(grep '^name:' foundry-agent/agent.yaml | cut -d'"' -f2)
+          INSTRUCTIONS=$(cat foundry-agent/instructions.md)
           echo "agent_name=$AGENT_NAME" >> $GITHUB_OUTPUT
-          
           echo "Agent Name: $AGENT_NAME"
-          echo "Project: $AZURE_AI_PROJECT_NAME"
-          echo "Model: $AZURE_AI_MODEL_DEPLOYMENT_NAME"
 
-      - name: Deploy/Update Foundry Agent
+      - name: Deploy Agent via Azure AI SDK
         id: deploy
+        env:
+          AGENT_NAME: ${{ steps.config.outputs.agent_name }}
         run: |
-          export PATH="$HOME/.azd/bin:$PATH"
-          echo "Deploying agent to Azure AI Foundry..."
-          echo ""
+          python << 'EOF'
+          import os
+          import json
+          from azure.identity import DefaultAzureCredential
+          from azure.ai.projects import AIProjectClient
+          from azure.ai.projects.models import AgentCapabilities
           
-          # Check if agent exists (upsert logic)
-          AGENT_NAME="${{ steps.config.outputs.agent_name }}"
+          # Read configuration
+          endpoint = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
+          model = os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"]
+          agent_name = os.environ["AGENT_NAME"]
           
-          # Using azd ai agent commands per Microsoft Learn guidance
-          # Docs: https://learn.microsoft.com/azure/developer/azure-developer-cli/azd-ai-agent
+          # Read instructions
+          with open("foundry-agent/instructions.md", "r") as f:
+              instructions = f.read()
           
-          # Try to get existing agent
-          EXISTING_AGENT=$(azd ai agent list --project "$AZURE_AI_PROJECT_NAME" 2>/dev/null | grep "$AGENT_NAME" || echo "")
+          print(f"Endpoint: {endpoint}")
+          print(f"Model: {model}")
+          print(f"Agent Name: {agent_name}")
           
-          if [ -n "$EXISTING_AGENT" ]; then
-            echo "Agent exists - updating..."
-            azd ai agent update \
-              --name "$AGENT_NAME" \
-              --project "$AZURE_AI_PROJECT_NAME" \
-              --instructions-file foundry-agent/instructions.md \
-              --model "$AZURE_AI_MODEL_DEPLOYMENT_NAME" \
-              || echo "Update command unavailable - see TODO section"
-          else
-            echo "Agent does not exist - creating..."
-            azd ai agent create \
-              --name "$AGENT_NAME" \
-              --project "$AZURE_AI_PROJECT_NAME" \
-              --instructions-file foundry-agent/instructions.md \
-              --model "$AZURE_AI_MODEL_DEPLOYMENT_NAME" \
-              || echo "Create command unavailable - see TODO section"
-          fi
+          # Initialize client with DefaultAzureCredential (uses OIDC from azure/login)
+          credential = DefaultAzureCredential()
+          client = AIProjectClient(endpoint=endpoint, credential=credential)
           
-          echo ""
-          echo "=== Deployment Info ==="
-          echo "Agent: $AGENT_NAME"
-          echo "Project: $AZURE_AI_PROJECT_NAME"
-          echo "Commit: ${{ github.sha }}"
-          echo "Deployed by: ${{ github.actor }}"
-          echo "deployment_status=completed" >> $GITHUB_OUTPUT
-
-      - name: Verify Deployment
-        continue-on-error: true
-        run: |
-          export PATH="$HOME/.azd/bin:$PATH"
-          echo "Verifying agent deployment..."
+          # List existing agents to check if update or create
+          print("\nListing existing agents...")
+          existing_agent = None
+          try:
+              agents = client.agents.list()
+              for agent in agents:
+                  print(f"  Found: {agent.name} (id: {agent.id})")
+                  if agent.name == agent_name:
+                      existing_agent = agent
+                      break
+          except Exception as e:
+              print(f"Could not list agents: {e}")
           
-          # List agents to confirm
-          azd ai agent list --project "$AZURE_AI_PROJECT_NAME" 2>/dev/null || echo "Verification skipped - CLI unavailable"
+          # Create or update agent
+          if existing_agent:
+              print(f"\nUpdating existing agent: {existing_agent.id}")
+              agent = client.agents.update(
+                  agent_id=existing_agent.id,
+                  name=agent_name,
+                  model=model,
+                  instructions=instructions
+              )
+              print(f"Agent updated: {agent.id}")
+          else:
+              print(f"\nCreating new agent: {agent_name}")
+              agent = client.agents.create(
+                  name=agent_name,
+                  model=model,
+                  instructions=instructions
+              )
+              print(f"Agent created: {agent.id}")
           
-          echo ""
-          echo "✅ Deployment workflow completed"
-          echo "Check the Azure AI Foundry portal to verify the agent:"
-          echo "https://ai.azure.com/"
+          # Output for summary
+          print(f"\n=== Deployment Complete ===")
+          print(f"Agent ID: {agent.id}")
+          print(f"Agent Name: {agent.name}")
+          print(f"Model: {agent.model}")
+          
+          # Write outputs
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"agent_id={agent.id}\n")
+              f.write(f"deployment_status=success\n")
+          EOF
 
       - name: Create Deployment Summary
         run: |
@@ -173,6 +181,7 @@ jobs:
           echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
           echo "| Agent Name | ${{ steps.config.outputs.agent_name }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Agent ID | ${{ steps.deploy.outputs.agent_id }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Project | ${{ env.AZURE_AI_PROJECT_NAME }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Commit | ${{ github.sha }} |" >> $GITHUB_STEP_SUMMARY
           echo "| Actor | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
@@ -181,4 +190,3 @@ jobs:
           echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
           echo "1. Verify the agent in [Azure AI Foundry](https://ai.azure.com/)" >> $GITHUB_STEP_SUMMARY
           echo "2. Test the agent with sample queries" >> $GITHUB_STEP_SUMMARY
-          echo "3. Monitor agent performance in the portal" >> $GITHUB_STEP_SUMMARY
