@@ -1,4 +1,4 @@
-name: CI Failure Investigator
+name: CI Failure Investigator (Agentic)
 
 on:
   workflow_run:
@@ -8,18 +8,22 @@ on:
     inputs:
       run_id:
         description: 'Workflow run ID to investigate'
-        required: false
+        required: true
         type: string
 
 permissions:
   actions: read
-  contents: write
+  contents: read
   issues: write
-  pull-requests: write
+  id-token: write
+
+env:
+  AZURE_AI_PROJECT_ENDPOINT: ${{ secrets.AZURE_AI_PROJECT_ENDPOINT }}
+  AZURE_AI_MODEL_DEPLOYMENT_NAME: ${{ secrets.AZURE_AI_MODEL_DEPLOYMENT_NAME }}
 
 jobs:
   investigate:
-    name: Investigate Failure
+    name: AI-Powered Failure Analysis
     runs-on: ubuntu-latest
     if: |
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure') ||
@@ -29,11 +33,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
-      - name: Read investigator workflow intent
-        run: |
-          echo "Reading agentic workflow definition..."
-          cat .github/copilot/agentic-workflows/ci-failure-investigator.md
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Get Failed Run Info
         id: run-info
@@ -41,7 +47,6 @@ jobs:
         with:
           script: |
             let runId;
-            let run;
             
             if (context.eventName === 'workflow_dispatch' && context.payload.inputs?.run_id) {
               runId = parseInt(context.payload.inputs.run_id);
@@ -52,15 +57,14 @@ jobs:
               return;
             }
             
-            // Get workflow run details
             const { data: workflowRun } = await github.rest.actions.getWorkflowRun({
               owner: context.repo.owner,
               repo: context.repo.repo,
               run_id: runId
             });
             
-            // Skip if this is the investigator workflow itself
-            if (workflowRun.name === 'CI Failure Investigator') {
+            // Skip investigating ourselves
+            if (workflowRun.name.includes('Investigator')) {
               core.notice('Skipping investigation of self');
               core.setOutput('skip', 'true');
               return;
@@ -71,110 +75,216 @@ jobs:
             core.setOutput('run_name', workflowRun.name);
             core.setOutput('run_url', workflowRun.html_url);
             core.setOutput('head_sha', workflowRun.head_sha);
-            core.setOutput('head_branch', workflowRun.head_branch);
-            
-            return workflowRun;
+            core.setOutput('head_branch', workflowRun.head_branch || 'unknown');
 
-      - name: Download Logs
+      - name: Download and Extract Logs
         if: steps.run-info.outputs.skip != 'true'
         id: logs
-        uses: actions/github-script@v7
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUN_ID="${{ steps.run-info.outputs.run_id }}"
+          echo "Downloading logs for run $RUN_ID..."
+          
+          # Download logs
+          gh run view $RUN_ID --repo ${{ github.repository }} --log-failed > failed_logs.txt 2>&1 || true
+          
+          # Truncate if too large (keep last 200 lines)
+          tail -200 failed_logs.txt > truncated_logs.txt
+          
+          # Save for next step
+          echo "LOGS<<EOFLOGMARKER" >> $GITHUB_ENV
+          cat truncated_logs.txt >> $GITHUB_ENV
+          echo "EOFLOGMARKER" >> $GITHUB_ENV
+          
+          echo "Logs extracted ($(wc -l < truncated_logs.txt) lines)"
+
+      - name: Setup Python
+        if: steps.run-info.outputs.skip != 'true'
+        uses: actions/setup-python@v5
         with:
-          script: |
-            const runId = ${{ steps.run-info.outputs.run_id || 0 }};
-            if (!runId) return;
-            
-            try {
-              // Get jobs for the run
-              const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: runId
-              });
-              
-              const failedJobs = jobs.jobs.filter(j => j.conclusion === 'failure');
-              
-              let analysis = [];
-              for (const job of failedJobs.slice(0, 3)) { // Limit to first 3 failed jobs
-                const failedSteps = job.steps?.filter(s => s.conclusion === 'failure') || [];
-                analysis.push({
-                  jobName: job.name,
-                  failedSteps: failedSteps.map(s => s.name)
-                });
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        if: steps.run-info.outputs.skip != 'true'
+        run: pip install openai azure-identity
+
+      - name: Analyze Failure with AI
+        if: steps.run-info.outputs.skip != 'true'
+        id: analyze
+        env:
+          RUN_NAME: ${{ steps.run-info.outputs.run_name }}
+          RUN_URL: ${{ steps.run-info.outputs.run_url }}
+          BRANCH: ${{ steps.run-info.outputs.head_branch }}
+        run: |
+          python << 'EOF'
+          import os
+          import json
+          from openai import AzureOpenAI
+          from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+
+          # Get logs and context
+          logs = os.environ.get("LOGS", "No logs available")
+          run_name = os.environ.get("RUN_NAME", "Unknown")
+          branch = os.environ.get("BRANCH", "unknown")
+          
+          # Setup Azure OpenAI
+          endpoint = os.environ["AZURE_AI_PROJECT_ENDPOINT"].replace("/api/projects/ai-project-three-pillars-foundry", "")
+          model = os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"]
+          
+          credential = DefaultAzureCredential()
+          token_provider = get_bearer_token_provider(credential, "https://cognitiveservices.azure.com/.default")
+          
+          client = AzureOpenAI(
+              azure_endpoint=endpoint,
+              azure_ad_token_provider=token_provider,
+              api_version="2024-05-01-preview"
+          )
+          
+          # AI analyzes the failure
+          prompt = f"""Analyze this CI/CD failure and provide actionable insights.
+
+          Workflow: {run_name}
+          Branch: {branch}
+          
+          Failed Logs:
+          ```
+          {logs[:8000]}
+          ```
+
+          Respond in JSON format:
+          {{
+            "root_cause": "brief description of the root cause",
+            "error_type": "syntax" | "dependency" | "test" | "config" | "infrastructure" | "unknown",
+            "severity": "critical" | "high" | "medium" | "low",
+            "suggested_fix": "specific steps to fix",
+            "code_snippet": "example fix if applicable (or null)",
+            "related_files": ["list of files likely involved"],
+            "prevention": "how to prevent this in the future"
+          }}
+
+          Only respond with valid JSON."""
+
+          response = client.chat.completions.create(
+              model=model,
+              messages=[
+                  {"role": "system", "content": "You are a CI/CD expert analyzing build failures. Provide actionable, specific advice. Respond only with valid JSON."},
+                  {"role": "user", "content": prompt}
+              ],
+              temperature=0.3,
+              max_tokens=1500
+          )
+          
+          result = response.choices[0].message.content.strip()
+          
+          # Parse JSON
+          try:
+              if result.startswith("```"):
+                  result = result.split("```")[1]
+                  if result.startswith("json"):
+                      result = result[4:]
+              analysis = json.loads(result)
+          except:
+              analysis = {
+                  "root_cause": "Could not parse AI analysis",
+                  "error_type": "unknown",
+                  "severity": "medium",
+                  "suggested_fix": "Manual investigation required",
+                  "code_snippet": None,
+                  "related_files": [],
+                  "prevention": "N/A"
               }
-              
-              core.setOutput('analysis', JSON.stringify(analysis));
-              core.setOutput('failed_job_count', failedJobs.length);
-              
-            } catch (error) {
-              core.warning(`Could not fetch logs: ${error.message}`);
-              core.setOutput('analysis', '[]');
-            }
+          
+          # Write outputs
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"root_cause={analysis['root_cause']}\n")
+              f.write(f"error_type={analysis['error_type']}\n")
+              f.write(f"severity={analysis['severity']}\n")
+              f.write(f"suggested_fix={analysis['suggested_fix']}\n")
+              f.write(f"prevention={analysis.get('prevention', 'N/A')}\n")
+          
+          # Save full analysis to file for issue body
+          with open("analysis.json", "w") as f:
+              json.dump(analysis, f, indent=2)
+          
+          print(f"AI Analysis: {json.dumps(analysis, indent=2)}")
+          EOF
 
       - name: Create Analysis Issue
         if: steps.run-info.outputs.skip != 'true'
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+            
             const runName = '${{ steps.run-info.outputs.run_name }}';
             const runUrl = '${{ steps.run-info.outputs.run_url }}';
             const runId = '${{ steps.run-info.outputs.run_id }}';
-            const analysis = JSON.parse('${{ steps.logs.outputs.analysis }}' || '[]');
+            const branch = '${{ steps.run-info.outputs.head_branch }}';
             
-            // Build analysis summary
-            let failureDetails = '';
-            if (analysis.length > 0) {
-              failureDetails = analysis.map(a => 
-                `### Job: ${a.jobName}\nFailed steps: ${a.failedSteps.join(', ') || 'Unknown'}`
-              ).join('\n\n');
-            } else {
-              failureDetails = 'Unable to retrieve detailed failure information.';
+            // Read AI analysis
+            let analysis;
+            try {
+              analysis = JSON.parse(fs.readFileSync('analysis.json', 'utf8'));
+            } catch {
+              analysis = {
+                root_cause: 'Analysis unavailable',
+                error_type: 'unknown',
+                severity: 'medium',
+                suggested_fix: 'Manual review required',
+                code_snippet: null,
+                related_files: [],
+                prevention: 'N/A'
+              };
             }
             
-            const issueBody = `## 🔴 CI Failure Analysis: ${runName}
-
-**Failed Workflow**: ${runName}
-**Failed Run**: [View Run](${runUrl})
-**Run ID**: ${runId}
-
-### Error Summary
-${failureDetails}
-
-### Analysis
-
-This workflow failure has been automatically detected. The details above show which jobs and steps failed.
-
-### Recommended Actions
-
-1. Review the [workflow logs](${runUrl}) for detailed error messages
-2. Check recent commits that might have caused the failure
-3. If this is a flaky test, consider adding retry logic
-4. If this is an infrastructure issue, check service status
-
-### Possibly Related
-
-- Check recent commits on the affected branch
-- Review similar past failures
-
----
-*This analysis was generated by the [CI Failure Investigator workflow](.github/copilot/agentic-workflows/ci-failure-investigator.md).*`;
-
-            // Check for existing open issues for this type of failure
-            const { data: existingIssues } = await github.rest.issues.listForRepo({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-              labels: 'ci-failure',
-              per_page: 5
-            });
+            const severityEmoji = {
+              'critical': '🔴',
+              'high': '🟠',
+              'medium': '🟡',
+              'low': '🟢'
+            };
             
-            // Create or update issue
+            const emoji = severityEmoji[analysis.severity] || '🟡';
+            
+            const codeBlock = analysis.code_snippet 
+              ? `\n### Suggested Code Fix\n\`\`\`\n${analysis.code_snippet}\n\`\`\`\n` 
+              : '';
+            
+            const relatedFiles = analysis.related_files?.length 
+              ? `\n### Related Files\n${analysis.related_files.map(f => `- \`${f}\``).join('\n')}\n`
+              : '';
+            
+            const issueBody = `## ${emoji} AI-Powered CI Failure Analysis
+
+            | Property | Value |
+            |----------|-------|
+            | **Workflow** | ${runName} |
+            | **Branch** | \`${branch}\` |
+            | **Run** | [View Logs](${runUrl}) |
+            | **Severity** | ${emoji} ${analysis.severity} |
+            | **Error Type** | ${analysis.error_type} |
+
+            ### 🔍 Root Cause
+            ${analysis.root_cause}
+
+            ### 🛠️ Suggested Fix
+            ${analysis.suggested_fix}
+            ${codeBlock}
+            ${relatedFiles}
+            ### 🛡️ Prevention
+            ${analysis.prevention}
+
+            ---
+            *This analysis was generated by Azure OpenAI via [CI Failure Investigator](.github/copilot/agentic-workflows/ci-failure-investigator.md).*
+            *The AI analyzed the workflow logs to identify the root cause and suggest fixes.*`;
+            
             const { data: issue } = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🔴 CI Failure: ${runName} (#${runId})`,
+              title: `${emoji} CI Failure: ${runName} - ${analysis.error_type}`,
               body: issueBody,
-              labels: ['ci-failure', 'automated']
+              labels: ['ci-failure', 'ai-analyzed', analysis.severity]
             });
             
-            console.log(`Created issue #${issue.number}`);
+            console.log(`Created issue #${issue.number} with AI analysis`);
