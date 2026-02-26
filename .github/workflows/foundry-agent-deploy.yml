@@ -91,7 +91,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install openai azure-identity
+          pip install azure-ai-projects azure-identity pyyaml
 
       - name: Read Agent Configuration
         id: config
@@ -100,18 +100,18 @@ jobs:
           echo "agent_name=$AGENT_NAME" >> $GITHUB_OUTPUT
           echo "Agent Name: $AGENT_NAME"
 
-      - name: Deploy Assistant via Azure OpenAI
+      - name: Deploy Agent via Azure AI Foundry
         id: deploy
         env:
           AGENT_NAME: ${{ steps.config.outputs.agent_name }}
         run: |
           python << 'EOF'
           import os
-          from openai import AzureOpenAI
-          from azure.identity import DefaultAzureCredential, get_bearer_token_provider
+          from azure.ai.projects import AIProjectClient
+          from azure.identity import DefaultAzureCredential
           
           # Read configuration
-          endpoint = os.environ["AZURE_AI_PROJECT_ENDPOINT"].rstrip("/")
+          endpoint = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
           model = os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"]
           agent_name = os.environ["AGENT_NAME"]
           
@@ -123,62 +123,56 @@ jobs:
           print(f"Model: {model}")
           print(f"Agent Name: {agent_name}")
           
-          # Get token provider for Azure AD authentication
+          # Initialize Azure AI Project client
           credential = DefaultAzureCredential()
-          token_provider = get_bearer_token_provider(
-              credential, "https://cognitiveservices.azure.com/.default"
+          project_client = AIProjectClient(
+              endpoint=endpoint,
+              credential=credential
           )
           
-          # Initialize Azure OpenAI client
-          client = AzureOpenAI(
-              azure_endpoint=endpoint,
-              azure_ad_token_provider=token_provider,
-              api_version="2024-05-01-preview"
-          )
-          
-          # List existing assistants to check if update or create
-          print("\nListing existing assistants...")
-          existing_assistant = None
+          # List existing agents to check if update or create
+          print("\nListing existing agents...")
+          existing_agent = None
           try:
-              assistants = client.beta.assistants.list(limit=100)
-              for assistant in assistants.data:
-                  print(f"  Found: {assistant.name} (id: {assistant.id})")
-                  if assistant.name == agent_name:
-                      existing_assistant = assistant
+              agents = project_client.agents.list_agents()
+              for agent in agents:
+                  print(f"  Found: {agent.name} (id: {agent.id})")
+                  if agent.name == agent_name:
+                      existing_agent = agent
                       break
           except Exception as e:
-              print(f"Could not list assistants: {e}")
+              print(f"Could not list agents: {e}")
           
-          # Create or update assistant
-          if existing_assistant:
-              print(f"\nUpdating existing assistant: {existing_assistant.id}")
-              assistant = client.beta.assistants.update(
-                  assistant_id=existing_assistant.id,
+          # Create or update agent
+          if existing_agent:
+              print(f"\nUpdating existing agent: {existing_agent.id}")
+              agent = project_client.agents.update_agent(
+                  agent_id=existing_agent.id,
                   name=agent_name,
                   model=model,
                   instructions=instructions,
                   tools=[{"type": "code_interpreter"}, {"type": "file_search"}]
               )
-              print(f"Assistant updated: {assistant.id}")
+              print(f"Agent updated: {agent.id}")
           else:
-              print(f"\nCreating new assistant: {agent_name}")
-              assistant = client.beta.assistants.create(
-                  name=agent_name,
+              print(f"\nCreating new agent: {agent_name}")
+              agent = project_client.agents.create_agent(
                   model=model,
+                  name=agent_name,
                   instructions=instructions,
                   tools=[{"type": "code_interpreter"}, {"type": "file_search"}]
               )
-              print(f"Assistant created: {assistant.id}")
+              print(f"Agent created: {agent.id}")
           
           # Output for summary
           print(f"\n=== Deployment Complete ===")
-          print(f"Assistant ID: {assistant.id}")
-          print(f"Assistant Name: {assistant.name}")
-          print(f"Model: {assistant.model}")
+          print(f"Agent ID: {agent.id}")
+          print(f"Agent Name: {agent.name}")
+          print(f"Model: {agent.model}")
           
           # Write outputs
           with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-              f.write(f"agent_id={assistant.id}\n")
+              f.write(f"agent_id={agent.id}\n")
               f.write(f"deployment_status=success\n")
           EOF
 
@@ -196,5 +190,5 @@ jobs:
           echo "| Status | ${{ steps.deploy.outputs.deployment_status }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
-          echo "1. Verify the assistant in [Azure AI Foundry](https://ai.azure.com/)" >> $GITHUB_STEP_SUMMARY
-          echo "2. Test the assistant with sample queries" >> $GITHUB_STEP_SUMMARY
+          echo "1. Verify the agent in [Azure AI Foundry](https://ai.azure.com/)" >> $GITHUB_STEP_SUMMARY
+          echo "2. Test the agent with sample queries" >> $GITHUB_STEP_SUMMARY
