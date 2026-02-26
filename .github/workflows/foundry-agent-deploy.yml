@@ -89,10 +89,13 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Install Azure Developer CLI
-        uses: Azure/setup-azd@v1
+        run: |
+          curl -fsSL https://aka.ms/install-azd.sh | bash
+          echo "$HOME/.azd/bin" >> $GITHUB_PATH
 
       - name: Install azd AI extension
         run: |
+          export PATH="$HOME/.azd/bin:$PATH"
           azd extension install ai --accept-terms || true
           echo "Azure Developer CLI AI extension ready"
 
@@ -110,6 +113,7 @@ jobs:
       - name: Deploy/Update Foundry Agent
         id: deploy
         run: |
+          export PATH="$HOME/.azd/bin:$PATH"
           echo "Deploying agent to Azure AI Foundry..."
           echo ""
           
@@ -151,6 +155,7 @@ jobs:
       - name: Verify Deployment
         continue-on-error: true
         run: |
+          export PATH="$HOME/.azd/bin:$PATH"
           echo "Verifying agent deployment..."
           
           # List agents to confirm
