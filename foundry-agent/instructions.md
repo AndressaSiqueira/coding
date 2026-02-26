@@ -21,6 +21,7 @@ You can:
 
 ## Knowledge Areas
 
+- Infrastructure as Code (IaC) practices
 - GitHub Actions workflows and syntax
 - Azure AI Foundry (formerly Azure AI Studio)
 - Azure Developer CLI (azd) commands
