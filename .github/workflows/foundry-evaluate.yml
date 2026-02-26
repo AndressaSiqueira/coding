@@ -66,31 +66,29 @@ jobs:
           echo "All required files present"
           echo "validated=true" >> $GITHUB_OUTPUT
 
-      - name: Run Agent Evaluation
-        id: evaluation
-        # Using the official Azure AI Agent Evaluation action
-        # Docs: https://github.com/marketplace/actions/azure-ai-agent-evaluation
-        uses: azure/ai-agent-evaluation@v1
-        continue-on-error: true  # Allow workflow to continue for reporting
-        with:
-          evaluation-dataset: eval/dataset.json
-          agent-config: foundry-agent/agent.yaml
-          project-endpoint: ${{ secrets.AZURE_AI_PROJECT_ENDPOINT }}
-          evaluators: |
-            coherence
-            groundedness
-            relevance
-            fluency
-          threshold-coherence: 3.5
-          threshold-groundedness: 3.5
-          threshold-relevance: 3.5
-          threshold-fluency: 3.5
+      # TODO: Enable when azure/ai-agent-evaluation action is available
+      # - name: Run Agent Evaluation
+      #   id: evaluation
+      #   uses: azure/ai-agent-evaluation@v1
+      #   continue-on-error: true
+      #   with:
+      #     evaluation-dataset: eval/dataset.json
+      #     agent-config: foundry-agent/agent.yaml
+      #     project-endpoint: ${{ secrets.AZURE_AI_PROJECT_ENDPOINT }}
+      #     evaluators: |
+      #       coherence
+      #       groundedness
+      #       relevance
+      #       fluency
+      #     threshold-coherence: 3.5
+      #     threshold-groundedness: 3.5
+      #     threshold-relevance: 3.5
+      #     threshold-fluency: 3.5
 
-      - name: Fallback Evaluation (if Azure unavailable)
-        if: steps.evaluation.outcome == 'failure' || steps.evaluation.outcome == 'skipped'
+      - name: Static Validation
         id: fallback-eval
         run: |
-          echo "Running fallback evaluation (Azure connection unavailable)..."
+          echo "Running static validation..."
           echo ""
           echo "=== Agent Configuration ==="
           cat foundry-agent/agent.yaml
@@ -135,17 +133,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const evalOutcome = '${{ steps.evaluation.outcome }}';
             const fallbackPassed = '${{ steps.fallback-eval.outputs.validation_passed }}';
             
             let status, details;
             
-            if (evalOutcome === 'success') {
+            if (fallbackPassed === 'true') {
               status = '✅ Passed';
-              details = 'Azure AI Agent Evaluation completed successfully. All quality thresholds met.';
-            } else if (fallbackPassed === 'true') {
-              status = '⚠️ Partial';
-              details = 'Azure connection unavailable. Fallback static validation passed.';
+              details = 'Static validation passed.';
             } else {
               status = '❌ Failed';
               details = 'Evaluation failed. Please review the workflow logs.';
@@ -162,16 +156,8 @@ ${details}
 - ✅ Agent instructions (instructions.md)  
 - ✅ Evaluation dataset (eval/dataset.json)
 
-### Quality Metrics
-| Metric | Threshold | Status |
-|--------|-----------|--------|
-| Coherence | 3.5 | ${evalOutcome === 'success' ? '✅' : '⚠️ Pending'} |
-| Groundedness | 3.5 | ${evalOutcome === 'success' ? '✅' : '⚠️ Pending'} |
-| Relevance | 3.5 | ${evalOutcome === 'success' ? '✅' : '⚠️ Pending'} |
-| Fluency | 3.5 | ${evalOutcome === 'success' ? '✅' : '⚠️ Pending'} |
-
 ---
-*Evaluated by [Foundry Agent Evaluation workflow](.github/workflows/foundry-agent-evaluate.yml)*`;
+*Evaluated by [Foundry Agent Evaluation workflow](.github/workflows/foundry-evaluate.yml)*`;
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -181,7 +167,7 @@ ${details}
             });
 
       - name: Fail if Evaluation Failed
-        if: steps.evaluation.outcome == 'failure' && steps.fallback-eval.outputs.validation_passed != 'true'
+        if: steps.fallback-eval.outputs.validation_passed != 'true'
         run: |
           echo "::error::Agent evaluation failed - PR check blocked"
           exit 1
