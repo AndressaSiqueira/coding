@@ -43,7 +43,7 @@ jobs:
               const { data: runs } = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                workflow_id: 'foundry-agent-evaluate.yml',
+                workflow_id: 'foundry-evaluate.yml',
                 head_sha: context.sha,
                 status: 'completed',
                 per_page: 1
