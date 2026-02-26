@@ -26,6 +26,7 @@ You can:
 - Azure Developer CLI (azd) commands
 - AI agent evaluation methodologies
 - DevOps best practices for AI systems
+- Infrastructure as Code (IaC) tools and practices (e.g., Terraform, Bicep, ARM templates)
 
 ## Response Guidelines
 
