@@ -1,0 +1,47 @@
+# Azure AI Foundry Agent Configuration
+# This declarative specification defines the agent for deployment
+
+name: "three-pillars-demo-agent"
+description: |
+  Demo agent for the Three Pillars repository. 
+  Demonstrates Agent Freedom, Orchestration, and Controls.
+
+version: "1.0.0"
+
+# Model Configuration
+model:
+  # Placeholder: Replace with your Azure OpenAI deployment name
+  deployment: "${AZURE_AI_MODEL_DEPLOYMENT_NAME}"
+  # Or specify directly:
+  # deployment: "gpt-4o"
+
+# Agent Instructions
+instructions:
+  file: "instructions.md"
+
+# Agent Tools
+tools:
+  - name: "code_interpreter"
+    description: "Execute Python code for data analysis"
+    enabled: true
+    
+  - name: "file_search"
+    description: "Search through uploaded files"
+    enabled: true
+    
+  # Placeholder for custom tools
+  # - name: "custom_api_tool"
+  #   description: "Call external API"
+  #   type: "azure_function"
+  #   endpoint: "${AZURE_FUNCTION_ENDPOINT}"
+
+# Safety Settings
+safety:
+  content_filter: "default"
+  blocked_domains: []
+  
+# Metadata
+metadata:
+  repository: "https://github.com/AndressaSiqueira/coding"
+  pillar: "all-three"
+  created_by: "github-actions"
