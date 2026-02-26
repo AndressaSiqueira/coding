@@ -1,0 +1,67 @@
+{
+  "name": "Three Pillars Demo Agent Evaluation",
+  "description": "Test dataset for evaluating the demo agent quality",
+  "version": "1.0.0",
+  "evaluators": [
+    "coherence",
+    "groundedness",
+    "relevance",
+    "fluency"
+  ],
+  "test_cases": [
+    {
+      "id": "tc-001",
+      "query": "What is Agent Freedom?",
+      "context": "The user is learning about the three pillars",
+      "expected_topics": ["versioned agents", "repository", "custom agents", "git"]
+    },
+    {
+      "id": "tc-002", 
+      "query": "How do I create a custom agent profile?",
+      "context": "The user wants to add a new agent to their repo",
+      "expected_topics": [".github/agents/", "YAML frontmatter", "markdown", "rules"]
+    },
+    {
+      "id": "tc-003",
+      "query": "Explain Agent Orchestration",
+      "context": "The user is learning about automation",
+      "expected_topics": ["GitHub Actions", "workflows", "automation", "triggers"]
+    },
+    {
+      "id": "tc-004",
+      "query": "How do I set up CI/CD for my agent?",
+      "context": "The user wants automated deployment",
+      "expected_topics": ["evaluation", "deployment", "pull request", "workflow"]
+    },
+    {
+      "id": "tc-005",
+      "query": "What are Agent Controls?",
+      "context": "The user is learning about safety and quality",
+      "expected_topics": ["guardrails", "evaluation", "gates", "audit"]
+    },
+    {
+      "id": "tc-006",
+      "query": "How do I deploy an agent to Azure AI Foundry?",
+      "context": "The user wants to deploy their agent",
+      "expected_topics": ["azd", "Azure", "deploy", "Foundry"]
+    },
+    {
+      "id": "tc-007",
+      "query": "What secrets do I need to configure?",
+      "context": "The user is setting up the repository",
+      "expected_topics": ["AZURE_SUBSCRIPTION_ID", "secrets", "authentication", "OIDC"]
+    },
+    {
+      "id": "tc-008",
+      "query": "How does the evaluation workflow work?",
+      "context": "The user wants to understand quality gates",
+      "expected_topics": ["pull request", "evaluation", "threshold", "block"]
+    }
+  ],
+  "quality_thresholds": {
+    "coherence": 3.5,
+    "groundedness": 3.5,
+    "relevance": 3.5,
+    "fluency": 3.5
+  }
+}
