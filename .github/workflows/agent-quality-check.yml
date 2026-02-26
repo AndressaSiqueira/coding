@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       debug:
-        description: 'Run with debug output'
+        description: Run with debug output
         required: false
         type: boolean
         default: false
@@ -46,7 +46,6 @@ jobs:
         run: |
           echo "Validating Foundry agent configuration..."
           
-          # Check required files exist
           if [ ! -f "foundry-agent/agent.yaml" ]; then
             echo "::error::Missing foundry-agent/agent.yaml"
             exit 1
@@ -66,36 +65,23 @@ jobs:
           echo "validated=true" >> $GITHUB_OUTPUT
 
       - name: Static Validation
-        id: fallback-eval
+        id: static-eval
         run: |
           echo "Running static validation..."
-          echo ""
-          echo "=== Agent Configuration ==="
-          cat foundry-agent/agent.yaml
-          echo ""
-          echo "=== Evaluation Dataset ==="
-          cat eval/dataset.json | head -50
-          echo ""
-          echo "=== Static Validation ==="
-          
           ERRORS=0
           
           if ! grep -q "name:" foundry-agent/agent.yaml; then
-            echo "::warning::agent.yaml missing 'name' field"
+            echo "::warning::agent.yaml missing name field"
             ERRORS=$((ERRORS+1))
           fi
           
           if ! grep -q "instructions" foundry-agent/agent.yaml; then
-            echo "::warning::agent.yaml missing 'instructions' reference"
+            echo "::warning::agent.yaml missing instructions reference"
             ERRORS=$((ERRORS+1))
           fi
           
-          TEST_CASES=$(cat eval/dataset.json | grep -c '"query"' || echo "0")
+          TEST_CASES=$(cat eval/dataset.json | grep -c "query" || echo "0")
           echo "Found $TEST_CASES test cases in evaluation dataset"
-          
-          if [ "$TEST_CASES" -lt 5 ]; then
-            echo "::warning::Evaluation dataset should have at least 5 test cases (found $TEST_CASES)"
-          fi
           
           if [ $ERRORS -gt 0 ]; then
             echo "::error::Static validation found $ERRORS issues"
@@ -105,46 +91,8 @@ jobs:
             echo "validation_passed=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Post Evaluation Results to PR
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fallbackPassed = '${{ steps.fallback-eval.outputs.validation_passed }}';
-            
-            let status, details;
-            
-            if (fallbackPassed === 'true') {
-              status = '✅ Passed';
-              details = 'Static validation passed.';
-            } else {
-              status = '❌ Failed';
-              details = 'Evaluation failed. Please review the workflow logs.';
-            }
-            
-            const body = `## 🧐 Agent Quality Check Results
-
-**Status**: ${status}
-
-${details}
-
-### Evaluated Components
-- ✅ Agent configuration (agent.yaml)
-- ✅ Agent instructions (instructions.md)  
-- ✅ Evaluation dataset (eval/dataset.json)
-
----
-*Evaluated by Agent Quality Check workflow*`;
-
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: body
-            });
-
-      - name: Fail if Evaluation Failed
-        if: steps.fallback-eval.outputs.validation_passed != 'true'
+      - name: Fail if Validation Failed
+        if: steps.static-eval.outputs.validation_passed != 'true'
         run: |
-          echo "::error::Agent evaluation failed - PR check blocked"
+          echo "::error::Agent evaluation failed"
           exit 1
