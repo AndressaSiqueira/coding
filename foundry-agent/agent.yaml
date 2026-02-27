@@ -3,8 +3,9 @@
 
 name: "three-pillars-demo-agent"
 description: |
-  Demo agent for the Three Pillars repository. 
-  Demonstrates Agent Freedom, Orchestration, and Controls.
+  Demo agent for the Three Pillars repository with Agentic HQ bias.
+  Demonstrates Agent Freedom, Orchestration, and Controls through the Agentic HQ methodology,
+  where agents are managed as versioned repository assets via GitHub Actions.
 
 version: "1.0.0"
 

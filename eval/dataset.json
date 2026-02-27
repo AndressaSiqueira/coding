@@ -1,7 +1,7 @@
 {
   "name": "Three Pillars Demo Agent Evaluation",
-  "description": "Test dataset for evaluating the demo agent quality",
-  "version": "1.0.0",
+  "description": "Test dataset for evaluating the demo agent quality with Agentic HQ perspective",
+  "version": "2.0.0",
   "evaluators": [
     "coherence",
     "groundedness",
@@ -12,32 +12,32 @@
     {
       "id": "tc-001",
       "query": "What is Agent Freedom?",
-      "context": "The user is learning about the three pillars",
-      "expected_topics": ["versioned agents", "repository", "custom agents", "git"]
+      "context": "The user is learning about the three pillars with Agentic HQ",
+      "expected_topics": ["versioned agents", "repository", "custom agents", "git", "agent.yaml"]
     },
     {
       "id": "tc-002", 
       "query": "How do I create a custom agent profile?",
       "context": "The user wants to add a new agent to their repo",
-      "expected_topics": [".github/agents/", "YAML frontmatter", "markdown", "rules"]
+      "expected_topics": ["agent.yaml", "instructions.md", "YAML", "versioned", "repository"]
     },
     {
       "id": "tc-003",
       "query": "Explain Agent Orchestration",
-      "context": "The user is learning about automation",
-      "expected_topics": ["GitHub Actions", "workflows", "automation", "triggers"]
+      "context": "The user is learning about automation with Agentic HQ",
+      "expected_topics": ["GitHub Actions", "workflows", "automation", "triggers", "repository events"]
     },
     {
       "id": "tc-004",
       "query": "How do I set up CI/CD for my agent?",
       "context": "The user wants automated deployment",
-      "expected_topics": ["evaluation", "deployment", "pull request", "workflow"]
+      "expected_topics": ["evaluation", "deployment", "pull request", "workflow", "quality gate"]
     },
     {
       "id": "tc-005",
       "query": "What are Agent Controls?",
-      "context": "The user is learning about safety and quality",
-      "expected_topics": ["guardrails", "evaluation", "gates", "audit"]
+      "context": "The user is learning about safety and quality with Agentic HQ",
+      "expected_topics": ["guardrails", "evaluation", "gates", "audit", "threshold"]
     },
     {
       "id": "tc-006",
@@ -56,6 +56,30 @@
       "query": "How does the evaluation workflow work?",
       "context": "The user wants to understand quality gates",
       "expected_topics": ["pull request", "evaluation", "threshold", "block"]
+    },
+    {
+      "id": "tc-009",
+      "query": "What is Agentic HQ?",
+      "context": "The user wants to understand the Agentic HQ methodology",
+      "expected_topics": ["repository", "headquarters", "agents as code", "GitHub Actions", "versioned"]
+    },
+    {
+      "id": "tc-010",
+      "query": "How does Agentic HQ treat agents differently from traditional approaches?",
+      "context": "The user is comparing Agentic HQ to other agent management approaches",
+      "expected_topics": ["versioned", "agents as code", "control plane", "GitHub", "portable", "auditable"]
+    },
+    {
+      "id": "tc-011",
+      "query": "How do the three pillars relate to Agentic HQ?",
+      "context": "The user wants to understand the full Agentic HQ framework",
+      "expected_topics": ["Agent Freedom", "Agent Orchestration", "Agent Controls", "Agentic HQ", "repository"]
+    },
+    {
+      "id": "tc-012",
+      "query": "Why should I store my agent definition in a git repository?",
+      "context": "The user is evaluating Agentic HQ's Agent Freedom pillar",
+      "expected_topics": ["versioned", "reviewable", "portable", "auditable", "git history"]
     }
   ],
   "quality_thresholds": {
