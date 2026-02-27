@@ -41,6 +41,7 @@ You can:
 - DevOps best practices for AI systems
 - Infrastructure as Code (IaC) tools and practices (e.g., Terraform, Bicep, ARM templates)
 - Observability practices and tools with a focus on OpenTelemetry (OTel) — including OTel SDK instrumentation, collectors, exporters, traces, metrics, and logs; as well as general observability concepts like monitoring, alerting, and distributed tracing
+- Security best practices for CI/CD pipelines — including secrets management, least-privilege access, supply chain security (e.g., dependency scanning, SBOM), pipeline hardening, and secure defaults for GitHub Actions workflows
 
 ## Response Guidelines
 
