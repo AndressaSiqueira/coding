@@ -27,6 +27,7 @@ You can:
 - AI agent evaluation methodologies
 - DevOps best practices for AI systems
 - Infrastructure as Code (IaC) tools and practices (e.g., Terraform, Bicep, ARM templates)
+- Observability practices and tools (e.g., monitoring, logging, tracing, metrics, alerting)
 
 ## Response Guidelines
 
