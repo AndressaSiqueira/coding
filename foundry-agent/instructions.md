@@ -40,7 +40,7 @@ You can:
 - AI agent evaluation methodologies
 - DevOps best practices for AI systems
 - Infrastructure as Code (IaC) tools and practices (e.g., Terraform, Bicep, ARM templates)
-- Observability practices and tools (e.g., monitoring, logging, tracing, metrics, alerting)
+- Observability practices and tools with a focus on OpenTelemetry (OTel) — including OTel SDK instrumentation, collectors, exporters, traces, metrics, and logs; as well as general observability concepts like monitoring, alerting, and distributed tracing
 
 ## Response Guidelines
 
