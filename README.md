@@ -1,20 +1,25 @@
 # Three Pillars AI Agent Demo 🤖
 
-This repository demonstrates the **Three Pillars** of AI agent management in GitHub:
+This repository demonstrates the **Three Pillars** of AI agent management in GitHub using the **Agentic HQ** methodology.
+
+## The Three Pillars
 
 | Pillar | Description | Location |
 |--------|-------------|----------|
 | 🔓 **Agent Freedom** | Custom agents as versioned repo assets | [`.github/agents/`](.github/agents/) |
-| 🎯 **Agent Orchestration** | Agentic automation via GitHub Actions | [`.github/copilot/agentic-workflows/`](.github/copilot/agentic-workflows/) |
+| 🎯 **Agent Orchestration** | Agentic automation via GitHub Actions | [`.github/workflows/`](.github/workflows/) |
 | 🛡️ **Agent Controls** | Guardrails, evaluation, and CI gates | [`.github/workflows/`](.github/workflows/) |
 
 ## Quick Links
 
-- [🎬 5-Minute Demo Script](#5-minute-demo-script)
-- [📚 How It Works](#how-it-works)
-- [⚙️ Setup Guide](#setup-guide)
-- [🔑 Required Secrets](#required-secrets)
-- [🐛 Troubleshooting](#troubleshooting)
+- [🔓 Agent Freedom](#-agent-freedom)
+- [🎯 Agent Orchestration](#-agent-orchestration)
+- [🛡️ Agent Controls](#%EF%B8%8F-agent-controls)
+- [🚀 Foundry Agent](#-foundry-agent)
+- [🎬 5-Minute Demo Script](#-5-minute-demo-script)
+- [⚙️ Setup Guide](#%EF%B8%8F-setup-guide)
+- [🔑 Required Secrets](#-required-secrets)
+- [🐛 Troubleshooting](#-troubleshooting)
 
 ---
 
@@ -54,37 +59,14 @@ Agent Orchestration uses **agentic workflows** to automate intelligent tasks via
 - If `docs`: proposes documentation updates
 
 **Files**:
-- Intent: [`.github/copilot/agentic-workflows/continuous-triage.md`](.github/copilot/agentic-workflows/continuous-triage.md)
-- Execution: [`.github/workflows/continuous-triage.yml`](.github/workflows/continuous-triage.yml)
-
-#### 2. CI Failure Investigator
-**Trigger**: When a workflow fails OR manual dispatch
-
-**Actions**:
-- Fetches failure logs
-- Analyzes root cause
-- Creates an issue with analysis and recommended fixes
-
-**Files**:
-- Intent: [`.github/copilot/agentic-workflows/ci-failure-investigator.md`](.github/copilot/agentic-workflows/ci-failure-investigator.md)
-- Execution: [`.github/workflows/ci-failure-investigator.yml`](.github/workflows/ci-failure-investigator.yml)
+- Intent: [`.github/workflows/continuous-triage.md`](.github/workflows/continuous-triage.md)
+- Workflow: [`.github/workflows/continuous-triage.lock.yml`](.github/workflows/continuous-triage.lock.yml)
 
 ---
 
 ## 🛡️ Agent Controls
 
 Agent Controls ensure **quality, safety, and auditability** through automated gates.
-
-### Evaluation Gate
-
-**Workflow**: [`.github/workflows/foundry-agent-evaluate.yml`](.github/workflows/foundry-agent-evaluate.yml)
-
-| Feature | Description |
-|---------|-------------|
-| **Trigger** | PRs modifying `foundry-agent/` |
-| **Evaluation** | Azure AI Agent Evaluation action |
-| **Metrics** | Coherence, Groundedness, Relevance, Fluency |
-| **Gate** | PR blocked if thresholds not met |
 
 ### Deploy Gate
 
@@ -93,9 +75,10 @@ Agent Controls ensure **quality, safety, and auditability** through automated ga
 | Feature | Description |
 |---------|-------------|
 | **Trigger** | Push to main modifying `foundry-agent/` |
-| **Prerequisite** | Evaluation must pass |
-| **Action** | Deploy/update agent via `azd ai agent` |
+| **Action** | Deploy/update agent via Azure AI Foundry |
 | **Audit** | Full logs in GitHub Actions |
+
+> **Note**: Evaluation workflows can be added to enforce quality gates before deployment. See the [Setup Guide](#%EF%B8%8F-setup-guide) for more information.
 
 ---
 
@@ -107,7 +90,8 @@ The repository includes a deployable Azure AI Foundry agent:
 |------|----------|
 | [`foundry-agent/agent.yaml`](foundry-agent/agent.yaml) | Declarative agent configuration |
 | [`foundry-agent/instructions.md`](foundry-agent/instructions.md) | Agent system instructions |
-| [`eval/dataset.json`](eval/dataset.json) | Evaluation test cases |
+
+The agent demonstrates the **Agentic HQ** methodology, where agents are managed as versioned files in your repository.
 
 ---
 
@@ -132,18 +116,18 @@ Use this script to demonstrate all three pillars live:
 
 ### Slide 3: Agent Controls (1.5 min)
 
-1. Create a branch and modify `foundry-agent/instructions.md`
-2. Open a Pull Request
-3. Show the **Foundry Agent Evaluation** check running
-4. Show evaluation results in PR comment
-5. **Key point**: "Quality gates block bad changes"
+1. Navigate to [`.github/workflows/`](https://github.com/AndressaSiqueira/coding/tree/main/.github/workflows)
+2. Show the `foundry-agent-deploy.yml` workflow
+3. Explain how deployment happens automatically when changes are pushed to main
+4. **Key point**: "Automated deployment with audit trails"
 
-### Slide 4: Deploy (0.5 min)
+### Slide 4: Live Demo (0.5 min)
 
-1. Merge the PR (if evaluation passed)
-2. Show **Foundry Agent Deploy** workflow trigger
-3. Show deployment summary in workflow logs
-4. **Key point**: "Automated deployment to Azure AI Foundry"
+1. Make a change to `foundry-agent/instructions.md`
+2. Push to main branch
+3. Show **Foundry Agent Deploy** workflow trigger
+4. Show deployment summary in workflow logs
+5. **Key point**: "Automated deployment to Azure AI Foundry"
 
 ---
 
@@ -153,7 +137,7 @@ Use this script to demonstrate all three pillars live:
 
 - GitHub repository with Actions enabled
 - Azure subscription with AI Foundry access
-- Azure Developer CLI (`azd`) installed locally (for testing)
+- (Optional) Azure Developer CLI (`azd`) installed locally for testing
 
 ### Step 1: Fork/Clone Repository
 
@@ -239,14 +223,14 @@ Configure these secrets in your repository settings:
 
 **Issue**: Continuous Triage doesn't run when issue is opened
 
-**Solution**: 
+**Solution**:
 1. Check Actions is enabled in repository settings
 2. Verify workflow file is on the default branch
 3. Check workflow permissions include `issues: write`
 
-### Evaluation failing
+### Deploy failing
 
-**Issue**: Foundry Agent Evaluation fails with auth errors
+**Issue**: Foundry Agent Deploy fails with auth errors
 
 **Solution**:
 1. Verify OIDC is configured correctly
@@ -255,48 +239,47 @@ Configure these secrets in your repository settings:
 
 ### Deploy not running
 
-**Issue**: Deploy workflow doesn't trigger after merge
+**Issue**: Deploy workflow doesn't trigger after push
 
 **Solution**:
 1. Ensure changes were in `foundry-agent/` directory
-2. Check the evaluation workflow passed on the PR
-3. Verify the push was to `main` branch
-
-### azd commands not found
-
-**Issue**: `azd ai agent` commands fail
-
-**Solution**:
-1. The `azd ai` extension is in preview
-2. Check [Azure Developer CLI docs](https://learn.microsoft.com/azure/developer/azure-developer-cli/) for updates
-3. Use fallback script in workflow (TODO section)
+2. Verify the push was to `main` branch
+3. Check workflow permissions in repository settings
 
 ---
 
-## 📝 TODO / Known Limitations
+## 📝 Extending This Demo
 
-### azd AI Extension
-The `azd ai agent` commands are in preview. If unavailable:
-- Use Azure AI Foundry REST API directly
-- Use Azure Python SDK
-- Deploy via Azure portal
+### Adding Evaluation Workflows
 
-### Agentic Workflow Fallbacks
-If GitHub Copilot agentic workflows are not available:
-- The workflows still run as standard GitHub Actions
+To add quality gates before deployment:
+
+1. Create an evaluation dataset in `eval/dataset.json` with test cases
+2. Add an evaluation workflow in `.github/workflows/foundry-agent-evaluate.yml`
+3. Configure it to run on PRs that modify `foundry-agent/`
+4. Set quality thresholds (coherence, groundedness, relevance, fluency ≥ 3.5)
+
+### Adding More Agentic Workflows
+
+To create additional automated workflows:
+
+1. Define the workflow intent in `.github/workflows/<workflow-name>.md`
+2. Implement the automation logic
+3. Set up appropriate triggers and permissions
+4. Test with real repository events
+
+### Agentic Workflow Considerations
+
+GitHub Copilot agentic workflows enable intelligent automation. If not available:
+- Workflows run as standard GitHub Actions
 - Classification uses rule-based logic instead of AI
-- PR creation requires manual steps
-
-### Evaluation Action
-The Azure AI Agent Evaluation action may have limited availability:
-- Fallback static validation is included
-- Manual evaluation can be triggered via Azure portal
+- Manual steps may be required for some features
 
 ---
 
 ## 📄 License
 
-MIT License - See [LICENSE](LICENSE) for details.
+This project is open source. See the repository for license details.
 
 ## 🤝 Contributing
 
@@ -305,6 +288,10 @@ MIT License - See [LICENSE](LICENSE) for details.
 3. Make your changes
 4. Open a PR - the agents will help review!
 
+## 🌐 Language / Idioma
+
+This documentation is available in English. Para documentação em português, sinta-se à vontade para abrir uma issue solicitando tradução.
+
 ---
 
-*Built to demonstrate AI agent best practices with GitHub and Azure AI Foundry*
+**Built to demonstrate AI agent best practices with GitHub and Azure AI Foundry using the Agentic HQ methodology**
