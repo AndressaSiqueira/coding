@@ -1,9 +1,0 @@
-﻿2026-02-27T02:01:24.5908953Z Evaluate and set job outputs
-2026-02-27T02:01:24.5914943Z Set output 'checkout_pr_success'
-2026-02-27T02:01:24.5917039Z Set output 'detection_conclusion'
-2026-02-27T02:01:24.5917696Z Set output 'detection_success'
-2026-02-27T02:01:24.5918063Z Set output 'has_patch'
-2026-02-27T02:01:24.5922263Z Set output 'output'
-2026-02-27T02:01:24.5922596Z Set output 'output_types'
-2026-02-27T02:01:24.5923441Z Cleaning up orphan processes
-2026-02-27T02:01:24.6267552Z Terminate orphan process: pid (3736) (node)
