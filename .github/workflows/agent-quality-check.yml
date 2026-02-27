@@ -1,10 +1,19 @@
 name: Agent Quality Check
 
 on:
+  # Triggers for human-created PRs
   pull_request:
     paths:
       - 'foundry-agent/**'
     types: [opened, synchronize, reopened]
+  
+  # Triggers for bot-created PRs (e.g., from Continuous Triage workflow)
+  # pull_request_target runs even when PR is created by GitHub Actions
+  pull_request_target:
+    paths:
+      - 'foundry-agent/**'
+    types: [opened, synchronize, reopened]
+  
   workflow_dispatch:
     inputs:
       debug:
@@ -32,6 +41,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # For pull_request_target, checkout the PR head to evaluate the changes
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: Azure Login (OIDC)
         uses: azure/login@v2
