@@ -181,6 +181,7 @@ jobs:
           AZURE_AI_PROJECT_ENDPOINT: ${{ secrets.AZURE_AI_PROJECT_ENDPOINT }}
           AZURE_AI_MODEL_DEPLOYMENT_NAME: ${{ secrets.AZURE_AI_MODEL_DEPLOYMENT_NAME }}
           AGENT_NAME: "three-pillars-demo-agent"
+          AGENT_ID: ${{ secrets.AZURE_AGENT_ID }}
           EVAL_DATASET_PATH: "eval/dataset.json"
         run: |
           echo "Running dynamic evaluation against deployed agent..."

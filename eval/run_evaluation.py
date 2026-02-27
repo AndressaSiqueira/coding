@@ -40,15 +40,42 @@ def load_dataset(dataset_path: str) -> dict:
         return json.load(f)
 
 
-def invoke_agent(project_client: AIProjectClient, agent_name: str, query: str, context: str = "") -> str:
+def invoke_agent(project_client: AIProjectClient, agent_name: str, query: str, context: str = "", agent_id: str = None) -> str:
     """Invoke the deployed agent and get a response."""
     try:
-        # Get the agent by name
-        agents = project_client.agents.list()
-        agent = next((a for a in agents if a.name == agent_name), None)
+        # Use agent ID directly if provided (preferred method)
+        if agent_id:
+            logger.info(f"Using agent ID directly: {agent_id}")
+            try:
+                agent = project_client.agents.get(agent_id)
+                logger.info(f"Found agent: ID={agent.id}, Name='{agent.name}'")
+            except Exception as e:
+                logger.error(f"Failed to get agent by ID '{agent_id}': {e}")
+                agent = None
+        else:
+            # Fallback: Get the agent by name
+            agents_list = list(project_client.agents.list())
+            
+            # Log all available agents for debugging
+            if agents_list:
+                logger.info(f"Available agents in project ({len(agents_list)} total):")
+                for a in agents_list:
+                    logger.info(f"  - ID: {a.id}, Name: '{a.name}', Model: {getattr(a, 'model', 'N/A')}")
+            else:
+                logger.warning("No agents found in project!")
+            
+            # Try exact match first
+            agent = next((a for a in agents_list if a.name == agent_name), None)
+            
+            # If not found, try case-insensitive match
+            if not agent:
+                agent = next((a for a in agents_list if a.name.lower() == agent_name.lower()), None)
+                if agent:
+                    logger.info(f"Found agent with case-insensitive match: '{agent.name}'")
         
         if not agent:
-            logger.warning(f"Agent '{agent_name}' not found, using mock response")
+            logger.error(f"Agent '{agent_name}' (ID: {agent_id}) not found!")
+            logger.error("Run will use mock responses which will fail quality checks.")
             return f"Mock response for: {query}"
         
         # Create a thread and run the agent
@@ -238,11 +265,17 @@ def main():
     endpoint = os.environ.get("AZURE_AI_PROJECT_ENDPOINT")
     model_deployment = os.environ.get("AZURE_AI_MODEL_DEPLOYMENT_NAME", "gpt-4o")
     agent_name = os.environ.get("AGENT_NAME", "three-pillars-demo-agent")
+    agent_id = os.environ.get("AGENT_ID")  # Direct agent ID (preferred)
     dataset_path = os.environ.get("EVAL_DATASET_PATH", "eval/dataset.json")
     
     if not endpoint:
         logger.error("AZURE_AI_PROJECT_ENDPOINT environment variable is required")
         sys.exit(1)
+    
+    if agent_id:
+        logger.info(f"Using agent ID: {agent_id}")
+    else:
+        logger.warning("AGENT_ID not set, will search by name (slower)")
     
     # Load dataset
     logger.info(f"Loading dataset from {dataset_path}")
@@ -272,6 +305,7 @@ def main():
                 agent_name,
                 tc["query"],
                 tc.get("context", ""),
+                agent_id=agent_id,
             )
             responses.append(response)
             logger.info(f"Response: {response[:100]}...")
