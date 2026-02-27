@@ -1,0 +1,32 @@
+﻿2026-02-27T01:45:21.3568445Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+2026-02-27T01:45:21.3568914Z with:
+2026-02-27T01:45:21.3569131Z   name: threat-detection.log
+2026-02-27T01:45:21.3569451Z   path: /tmp/gh-aw/threat-detection/detection.log
+2026-02-27T01:45:21.3569767Z   if-no-files-found: ignore
+2026-02-27T01:45:21.3570033Z   compression-level: 6
+2026-02-27T01:45:21.3570255Z   overwrite: false
+2026-02-27T01:45:21.3570473Z   include-hidden-files: false
+2026-02-27T01:45:21.3570721Z env:
+2026-02-27T01:45:21.3570903Z   DEFAULT_BRANCH: main
+2026-02-27T01:45:21.3571133Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:45:21.3571374Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:45:21.3571609Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:45:21.3571893Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:45:21.3572266Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:45:21.3572675Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:45:21.3573101Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:45:21.3573750Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:45:21.3574092Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T01:45:21.3574425Z   GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
+2026-02-27T01:45:21.3574724Z ##[endgroup]
+2026-02-27T01:45:21.5244717Z With the provided path, there will be 1 file uploaded
+2026-02-27T01:45:21.5249575Z Artifact name is valid!
+2026-02-27T01:45:21.5250411Z Root directory input is valid!
+2026-02-27T01:45:21.6250164Z Beginning upload of artifact content to blob storage
+2026-02-27T01:45:21.7756429Z Uploaded bytes 3143
+2026-02-27T01:45:21.8116463Z Finished uploading artifact content to blob storage!
+2026-02-27T01:45:21.8117473Z SHA256 digest of uploaded artifact zip is d8990d4882633b5f8db18944844eb9022d20b622352c3dd706e6ae5ae7917a0b
+2026-02-27T01:45:21.8119215Z Finalizing artifact upload
+2026-02-27T01:45:21.9668641Z Artifact threat-detection.log.zip successfully finalized. Artifact ID 5683495360
+2026-02-27T01:45:21.9669867Z Artifact threat-detection.log has been successfully uploaded! Final size is 3143 bytes. Artifact ID is 5683495360
+2026-02-27T01:45:21.9674894Z Artifact download URL: https://github.com/AndressaSiqueira/coding/actions/runs/22468520800/artifacts/5683495360

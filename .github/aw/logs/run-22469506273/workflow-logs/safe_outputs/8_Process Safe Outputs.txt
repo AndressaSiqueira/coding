@@ -1,0 +1,73 @@
+﻿2026-02-27T02:01:41.9867187Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T02:01:41.9868351Z with:
+2026-02-27T02:01:41.9869040Z   github-token: ***
+2026-02-27T02:01:41.9870513Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/safe_output_handler_manager.cjs');
+await main();
+
+2026-02-27T02:01:41.9872081Z   debug: false
+2026-02-27T02:01:41.9872522Z   user-agent: actions/github-script
+2026-02-27T02:01:41.9873080Z   result-encoding: json
+2026-02-27T02:01:41.9873532Z   retries: 0
+2026-02-27T02:01:41.9873997Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T02:01:41.9874572Z env:
+2026-02-27T02:01:41.9874957Z   GH_AW_ENGINE_ID: copilot
+2026-02-27T02:01:41.9875455Z   GH_AW_WORKFLOW_ID: continuous-triage
+2026-02-27T02:01:41.9876019Z   GH_AW_WORKFLOW_NAME: Continuous Triage
+2026-02-27T02:01:41.9876702Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/safeoutputs/agent_output.json
+2026-02-27T02:01:41.9878386Z   GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: {"add_comment":{"max":1},"add_labels":{},"create_pull_request":{"base_branch":"main","max":1,"max_patch_size":1024},"missing_data":{},"missing_tool":{}}
+2026-02-27T02:01:41.9879701Z   GH_AW_CI_TRIGGER_TOKEN: 
+2026-02-27T02:01:41.9880165Z ##[endgroup]
+2026-02-27T02:01:42.2922376Z Safe Output Handler Manager starting...
+2026-02-27T02:01:42.2940516Z Loaded config from GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: {"add_comment":{"max":1},"add_labels":{},"create_pull_request":{"base_branch":"main","max":1,"max_patch_size":1024},"missing_data":{},"missing_tool":{}}
+2026-02-27T02:01:42.2963543Z Agent output content length: 1141
+2026-02-27T02:01:42.2970600Z Found 2 message(s) in agent output
+2026-02-27T02:01:42.2985024Z Loading and initializing safe output handlers based on configuration...
+2026-02-27T02:01:42.3070888Z Add comment configuration: max=1, target=triggering
+2026-02-27T02:01:42.3074297Z Default target repo: AndressaSiqueira/coding
+2026-02-27T02:01:42.3083225Z ✓ Loaded and initialized handler for: add_comment
+2026-02-27T02:01:42.3108881Z Add labels configuration: max=10
+2026-02-27T02:01:42.3113346Z Default target repo: AndressaSiqueira/coding
+2026-02-27T02:01:42.3118003Z ✓ Loaded and initialized handler for: add_labels
+2026-02-27T02:01:42.3189600Z Base branch: main
+2026-02-27T02:01:42.3203919Z Default target repo: AndressaSiqueira/coding
+2026-02-27T02:01:42.3205750Z Draft default: true
+2026-02-27T02:01:42.3208875Z If no changes: warn
+2026-02-27T02:01:42.3210794Z Allow empty: false
+2026-02-27T02:01:42.3212424Z Auto-merge: false
+2026-02-27T02:01:42.3213932Z Max count: 1
+2026-02-27T02:01:42.3215441Z Max patch size: 1024 KB
+2026-02-27T02:01:42.3217786Z ✓ Loaded and initialized handler for: create_pull_request
+2026-02-27T02:01:42.3243262Z Max count: unlimited
+2026-02-27T02:01:42.3244888Z ✓ Loaded and initialized handler for: missing_tool
+2026-02-27T02:01:42.3256245Z Max count: unlimited
+2026-02-27T02:01:42.3259578Z ✓ Loaded and initialized handler for: missing_data
+2026-02-27T02:01:42.3269746Z Loaded 5 handler(s)
+2026-02-27T02:01:42.3282797Z Collected 0 missing tool(s), 0 missing data item(s), and 0 noop message(s)
+2026-02-27T02:01:42.3285729Z Processing 2 message(s) in order of appearance...
+2026-02-27T02:01:42.3289996Z Processing message 1/2: add_labels
+2026-02-27T02:01:42.3297247Z Target repository: AndressaSiqueira/coding
+2026-02-27T02:01:42.3301074Z Requested labels: ["enhancement"]
+2026-02-27T02:01:42.3310392Z Adding 1 labels to issue #10 in AndressaSiqueira/coding: ["enhancement"]
+2026-02-27T02:01:42.7825824Z Successfully added 1 labels to issue #10 in AndressaSiqueira/coding
+2026-02-27T02:01:42.7833981Z ✓ Message 1 (add_labels) completed successfully
+2026-02-27T02:01:42.7839737Z Processing message 2/2: add_comment
+2026-02-27T02:01:42.7864068Z Target repository: AndressaSiqueira/coding
+2026-02-27T02:01:42.7880276Z Using explicitly provided item_number: #10
+2026-02-27T02:01:42.9023308Z [MENTIONS] Allowing parent entity authors in comment: AndressaSiqueira
+2026-02-27T02:01:42.9079417Z Adding comment to issue/PR #10 in AndressaSiqueira/coding
+2026-02-27T02:01:43.4092677Z Created comment: https://github.com/AndressaSiqueira/coding/issues/10#issuecomment-3970285945
+2026-02-27T02:01:43.4101357Z 📝 Manifest: logged add_comment → https://github.com/AndressaSiqueira/coding/issues/10#issuecomment-3970285945
+2026-02-27T02:01:43.4174757Z ✓ Message 2 (add_comment) completed successfully
+2026-02-27T02:01:43.4181702Z Stored 0 missing tool(s), 0 missing data item(s), and 0 noop message(s) for footer generation
+2026-02-27T02:01:43.4211909Z 📝 Safe output summaries written to step summary
+2026-02-27T02:01:43.4220650Z 
+2026-02-27T02:01:43.4221292Z === Processing Summary ===
+2026-02-27T02:01:43.4226650Z Total messages: 2
+2026-02-27T02:01:43.4234634Z Successful: 2
+2026-02-27T02:01:43.4241396Z Failed: 0
+2026-02-27T02:01:43.4248970Z Temporary IDs registered: 0
+2026-02-27T02:01:43.4254115Z Synthetic updates: 0
+2026-02-27T02:01:43.4269578Z Exported temporary ID map with 0 mapping(s)
+2026-02-27T02:01:43.4283025Z Safe Output Handler Manager completed

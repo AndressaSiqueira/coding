@@ -1,0 +1,27 @@
+﻿2026-02-27T02:02:02.0466581Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T02:02:02.0468039Z with:
+2026-02-27T02:02:02.0469130Z   github-token: ***
+2026-02-27T02:02:02.0471901Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/handle_noop_message.cjs');
+await main();
+
+2026-02-27T02:02:02.0474983Z   debug: false
+2026-02-27T02:02:02.0475763Z   user-agent: actions/github-script
+2026-02-27T02:02:02.0476734Z   result-encoding: json
+2026-02-27T02:02:02.0477524Z   retries: 0
+2026-02-27T02:02:02.0478336Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T02:02:02.0479344Z env:
+2026-02-27T02:02:02.0480259Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/safeoutputs/agent_output.json
+2026-02-27T02:02:02.0481484Z   GH_AW_WORKFLOW_NAME: Continuous Triage
+2026-02-27T02:02:02.0482908Z   GH_AW_RUN_URL: https://github.com/AndressaSiqueira/coding/actions/runs/22469506273
+2026-02-27T02:02:02.0484632Z   GH_AW_AGENT_CONCLUSION: success
+2026-02-27T02:02:02.0485562Z   GH_AW_NOOP_MESSAGE: 
+2026-02-27T02:02:02.0486396Z   GH_AW_NOOP_REPORT_AS_ISSUE: true
+2026-02-27T02:02:02.0487312Z ##[endgroup]
+2026-02-27T02:02:02.1283756Z Workflow name: Continuous Triage
+2026-02-27T02:02:02.1290532Z Run URL: https://github.com/AndressaSiqueira/coding/actions/runs/22469506273
+2026-02-27T02:02:02.1294904Z No-op message: 
+2026-02-27T02:02:02.1297995Z Agent conclusion: success
+2026-02-27T02:02:02.1301082Z Report as issue: true
+2026-02-27T02:02:02.1304886Z No no-op message found, skipping

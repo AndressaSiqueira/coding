@@ -1,0 +1,31 @@
+﻿2026-02-27T01:45:21.9845790Z ##[group]Run if [[ "$RUN_DETECTION" != "true" ]]; then
+2026-02-27T01:45:21.9846245Z [36;1mif [[ "$RUN_DETECTION" != "true" ]]; then[0m
+2026-02-27T01:45:21.9846864Z [36;1m  echo "conclusion=skipped" >> "$GITHUB_OUTPUT"[0m
+2026-02-27T01:45:21.9847241Z [36;1m  echo "success=true" >> "$GITHUB_OUTPUT"[0m
+2026-02-27T01:45:21.9847631Z [36;1m  echo "Detection was not needed, marking as skipped"[0m
+2026-02-27T01:45:21.9848019Z [36;1melif [[ "$DETECTION_SUCCESS" == "true" ]]; then[0m
+2026-02-27T01:45:21.9848398Z [36;1m  echo "conclusion=success" >> "$GITHUB_OUTPUT"[0m
+2026-02-27T01:45:21.9848743Z [36;1m  echo "success=true" >> "$GITHUB_OUTPUT"[0m
+2026-02-27T01:45:21.9849080Z [36;1m  echo "Detection passed successfully"[0m
+2026-02-27T01:45:21.9849407Z [36;1melse[0m
+2026-02-27T01:45:21.9849662Z [36;1m  echo "conclusion=failure" >> "$GITHUB_OUTPUT"[0m
+2026-02-27T01:45:21.9850013Z [36;1m  echo "success=false" >> "$GITHUB_OUTPUT"[0m
+2026-02-27T01:45:21.9850329Z [36;1m  echo "Detection found issues"[0m
+2026-02-27T01:45:21.9850650Z [36;1mfi[0m
+2026-02-27T01:45:21.9880760Z shell: /usr/bin/bash -e {0}
+2026-02-27T01:45:21.9881069Z env:
+2026-02-27T01:45:21.9881289Z   DEFAULT_BRANCH: main
+2026-02-27T01:45:21.9881534Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:45:21.9881808Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:45:21.9882048Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:45:21.9882370Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:45:21.9882760Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:45:21.9883193Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:45:21.9883640Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:45:21.9884031Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:45:21.9884379Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T01:45:21.9884716Z   GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
+2026-02-27T01:45:21.9885029Z   RUN_DETECTION: true
+2026-02-27T01:45:21.9885281Z   DETECTION_SUCCESS: true
+2026-02-27T01:45:21.9885518Z ##[endgroup]
+2026-02-27T01:45:21.9935443Z Detection passed successfully

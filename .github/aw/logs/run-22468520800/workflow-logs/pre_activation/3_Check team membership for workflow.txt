@@ -1,0 +1,20 @@
+﻿2026-02-27T01:42:25.4310202Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:42:25.4312751Z with:
+2026-02-27T01:42:25.4315436Z   github-token: ***
+2026-02-27T01:42:25.4318871Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/check_membership.cjs');
+await main();
+
+2026-02-27T01:42:25.4322578Z   debug: false
+2026-02-27T01:42:25.4323341Z   user-agent: actions/github-script
+2026-02-27T01:42:25.4324204Z   result-encoding: json
+2026-02-27T01:42:25.4324913Z   retries: 0
+2026-02-27T01:42:25.4327465Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:42:25.4331612Z env:
+2026-02-27T01:42:25.4332411Z   GH_AW_REQUIRED_ROLES: admin,maintainer,write
+2026-02-27T01:42:25.4334237Z ##[endgroup]
+2026-02-27T01:42:26.0035741Z Checking if user 'AndressaSiqueira' has required permissions for AndressaSiqueira/coding
+2026-02-27T01:42:26.0043644Z Required permissions: admin, maintainer, write
+2026-02-27T01:42:26.3460750Z Repository permission level: admin
+2026-02-27T01:42:26.3477430Z ✅ User has admin access to repository

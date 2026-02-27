@@ -1,0 +1,18 @@
+﻿2026-02-27T01:46:15.4704565Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:46:15.4705943Z with:
+2026-02-27T01:46:15.4706973Z   github-token: ***
+2026-02-27T01:46:15.4709381Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/missing_tool.cjs');
+await main();
+
+2026-02-27T01:46:15.4712310Z   debug: false
+2026-02-27T01:46:15.4713032Z   user-agent: actions/github-script
+2026-02-27T01:46:15.4713910Z   result-encoding: json
+2026-02-27T01:46:15.4714628Z   retries: 0
+2026-02-27T01:46:15.4715372Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:46:15.4716336Z env:
+2026-02-27T01:46:15.4717172Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/safeoutputs/agent_output.json
+2026-02-27T01:46:15.4718325Z   GH_AW_WORKFLOW_NAME: Continuous Triage
+2026-02-27T01:46:15.4719202Z ##[endgroup]
+2026-02-27T01:46:15.5466587Z Max count: unlimited

@@ -42,6 +42,7 @@ Analyze the issue title and body to classify it:
 - Requests new functionality
 - Keywords: "add", "implement", "would be nice", "feature request", "suggestion"
 - Describes something that doesn't exist yet
+- **Label**: Use `feature` (not `enhancement`)
 
 ### 📚 Docs
 - Relates to documentation
@@ -82,6 +83,17 @@ When an issue is classified as `docs`:
 2. Propose specific improvements based on the issue
 3. Create a draft PR with the documentation changes
 4. Link the PR to the original issue with "Closes #[issue-number]"
+
+## Feature Implementation Flow
+
+When an issue is classified as `feature`:
+
+1. Analyze what changes are needed to implement the feature
+2. If the change is simple and well-scoped:
+   - Make the required code/config changes
+   - Create a draft PR with the implementation
+   - Link the PR to the original issue with "Closes #[issue-number]"
+3. If the change is complex, just add the label and comment with guidance
 
 ## Additional Labels
 

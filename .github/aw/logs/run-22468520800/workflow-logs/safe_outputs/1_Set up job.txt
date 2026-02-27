@@ -1,0 +1,32 @@
+﻿2026-02-27T01:45:29.0859229Z Current runner version: '2.331.0'
+2026-02-27T01:45:29.0884875Z ##[group]Runner Image Provisioner
+2026-02-27T01:45:29.0885752Z Hosted Compute Agent
+2026-02-27T01:45:29.0886233Z Version: 20260115.477
+2026-02-27T01:45:29.0886850Z Commit: 4b342d620503cbe250a3154040964899ea7c9b00
+2026-02-27T01:45:29.0887488Z Build Date: 2026-01-15T22:32:41Z
+2026-02-27T01:45:29.0888108Z Worker ID: {c1f97c3d-33c7-4d2e-ad7b-45ec5b5210ca}
+2026-02-27T01:45:29.0888786Z Azure Region: westus3
+2026-02-27T01:45:29.0889264Z ##[endgroup]
+2026-02-27T01:45:29.0890619Z ##[group]VM Image
+2026-02-27T01:45:29.0891187Z - OS: Linux (x64)
+2026-02-27T01:45:29.0891689Z - Source: Docker
+2026-02-27T01:45:29.0892120Z - Name: ubuntu:24.04
+2026-02-27T01:45:29.0892905Z - Version: 20260120.46.1
+2026-02-27T01:45:29.0893400Z ##[endgroup]
+2026-02-27T01:45:29.0895089Z ##[group]GITHUB_TOKEN Permissions
+2026-02-27T01:45:29.0897159Z Contents: write
+2026-02-27T01:45:29.0897670Z Discussions: write
+2026-02-27T01:45:29.0898210Z Issues: write
+2026-02-27T01:45:29.0898659Z Metadata: read
+2026-02-27T01:45:29.0899352Z PullRequests: write
+2026-02-27T01:45:29.0899837Z ##[endgroup]
+2026-02-27T01:45:29.0901881Z Secret source: Actions
+2026-02-27T01:45:29.0902610Z Prepare workflow directory
+2026-02-27T01:45:29.3169263Z Prepare all required actions
+2026-02-27T01:45:29.3247781Z Getting action download info
+2026-02-27T01:45:30.0900024Z Download action repository 'github/gh-aw@a7d371cc7e68f270ded0592942424548e05bf1c2' (SHA:a7d371cc7e68f270ded0592942424548e05bf1c2)
+2026-02-27T01:45:41.0705978Z Download action repository 'actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53' (SHA:018cc2cf5baa6db3ef3c5f8a56943fffe632ef53)
+2026-02-27T01:45:41.9546726Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+2026-02-27T01:45:42.0755029Z Download action repository 'actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd' (SHA:ed597411d8f924073f98dfc5c65a23a2325f34cd)
+2026-02-27T01:45:42.8631782Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-02-27T01:45:43.3848462Z Complete job name: safe_outputs

@@ -1,0 +1,22 @@
+﻿2026-02-27T01:59:05.3546531Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:59:05.3547347Z with:
+2026-02-27T01:59:05.3549105Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/check_workflow_timestamp_api.cjs');
+await main();
+
+2026-02-27T01:59:05.3550936Z   github-token: ***
+2026-02-27T01:59:05.3551569Z   debug: false
+2026-02-27T01:59:05.3551982Z   user-agent: actions/github-script
+2026-02-27T01:59:05.3552501Z   result-encoding: json
+2026-02-27T01:59:05.3552923Z   retries: 0
+2026-02-27T01:59:05.3553362Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:59:05.3553910Z env:
+2026-02-27T01:59:05.3554334Z   GH_AW_WORKFLOW_FILE: continuous-triage.lock.yml
+2026-02-27T01:59:05.3554924Z ##[endgroup]
+2026-02-27T01:59:05.4452302Z Checking workflow timestamps using GitHub API:
+2026-02-27T01:59:05.4458630Z   Source: .github/workflows/continuous-triage.md
+2026-02-27T01:59:05.4462109Z   Lock file: .github/workflows/continuous-triage.lock.yml
+2026-02-27T01:59:05.8785299Z   Source last commit: 2026-02-26T23:43:06.000Z (0c273e0)
+2026-02-27T01:59:05.8787566Z   Lock last commit: 2026-02-26T23:43:06.000Z (0c273e0)
+2026-02-27T01:59:05.8789859Z ✅ Lock file is up to date (same commit)

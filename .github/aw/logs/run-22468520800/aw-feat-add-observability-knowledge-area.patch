@@ -1,0 +1,33 @@
+From acf5da41ba841e94eea21210a6d516fce4e3752e Mon Sep 17 00:00:00 2001
+From: Copilot <223556219+Copilot@users.noreply.github.com>
+Date: Fri, 27 Feb 2026 01:44:22 +0000
+Subject: [PATCH] feat: add observability as a Knowledge Area in agent
+ instructions
+
+Adds observability practices and tools as a new Knowledge Area in
+foundry-agent/instructions.md, covering logging, metrics, distributed
+tracing, alerting, and tools such as OpenTelemetry, Azure Monitor,
+Prometheus, and Grafana.
+
+Closes #6
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+---
+ foundry-agent/instructions.md | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/foundry-agent/instructions.md b/foundry-agent/instructions.md
+index 51ad5ae..655a687 100644
+--- a/foundry-agent/instructions.md
++++ b/foundry-agent/instructions.md
+@@ -27,6 +27,7 @@ You can:
+ - AI agent evaluation methodologies
+ - DevOps best practices for AI systems
+ - Infrastructure as Code (IaC) tools and practices (e.g., Terraform, Bicep, ARM templates)
++- Observability practices and tools (e.g., logging, metrics, distributed tracing, alerting, OpenTelemetry, Azure Monitor, Prometheus, Grafana)
+ 
+ ## Response Guidelines
+ 
+-- 
+2.53.0
+

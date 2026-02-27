@@ -1,0 +1,25 @@
+﻿2026-02-27T01:43:06.0598650Z ##[group]Run /opt/gh-aw/actions/install_copilot_cli.sh 0.0.418
+2026-02-27T01:43:06.0618815Z [36;1m/opt/gh-aw/actions/install_copilot_cli.sh 0.0.418[0m
+2026-02-27T01:43:06.0649403Z shell: /usr/bin/bash -e {0}
+2026-02-27T01:43:06.0649680Z env:
+2026-02-27T01:43:06.0649857Z   DEFAULT_BRANCH: main
+2026-02-27T01:43:06.0650079Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:43:06.0650297Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:43:06.0650515Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:43:06.0650788Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:43:06.0651126Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:43:06.0651505Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:43:06.0651905Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:43:06.0652238Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:43:06.0652500Z ##[endgroup]
+2026-02-27T01:43:06.0721101Z Ensuring correct ownership of /home/runner/.copilot...
+2026-02-27T01:43:06.0825375Z Installing GitHub Copilot CLI version v0.0.418 (os: Linux, arch: x86_64)...
+2026-02-27T01:43:06.0836942Z Downloading checksums from https://github.com/github/copilot-cli/releases/download/v0.0.418/SHA256SUMS.txt...
+2026-02-27T01:43:06.1893544Z Downloading binary from https://github.com/github/copilot-cli/releases/download/v0.0.418/copilot-linux-x64.tar.gz...
+2026-02-27T01:43:06.6471294Z Verifying SHA256 checksum for copilot-linux-x64.tar.gz...
+2026-02-27T01:43:06.7075398Z ✓ Checksum verification passed for copilot-linux-x64.tar.gz
+2026-02-27T01:43:06.7076296Z Installing binary to /usr/local/bin...
+2026-02-27T01:43:07.6039364Z Verifying Copilot CLI installation...
+2026-02-27T01:43:08.8584265Z GitHub Copilot CLI 0.0.418.
+2026-02-27T01:43:08.8584679Z Run 'copilot update' to check for updates.
+2026-02-27T01:43:08.8715057Z ✓ Copilot CLI installation complete

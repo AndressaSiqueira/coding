@@ -1,0 +1,31 @@
+﻿2026-02-27T01:44:53.7740129Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:44:53.7740538Z with:
+2026-02-27T01:44:53.7741291Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/setup_threat_detection.cjs');
+await main();
+
+2026-02-27T01:44:53.7742215Z   github-token: ***
+2026-02-27T01:44:53.7742437Z   debug: false
+2026-02-27T01:44:53.7742658Z   user-agent: actions/github-script
+2026-02-27T01:44:53.7742949Z   result-encoding: json
+2026-02-27T01:44:53.7743181Z   retries: 0
+2026-02-27T01:44:53.7743437Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:44:53.7743899Z env:
+2026-02-27T01:44:53.7744109Z   DEFAULT_BRANCH: main
+2026-02-27T01:44:53.7744368Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:44:53.7744626Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:44:53.7744868Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:44:53.7745157Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:44:53.7745553Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:44:53.7745962Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:44:53.7746384Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:44:53.7747046Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:44:53.7747379Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T01:44:53.7747699Z   WORKFLOW_NAME: Continuous Triage
+2026-02-27T01:44:53.7748003Z   WORKFLOW_DESCRIPTION: No description provided
+2026-02-27T01:44:53.7748296Z   HAS_PATCH: true
+2026-02-27T01:44:53.7748528Z ##[endgroup]
+2026-02-27T01:44:53.8469318Z Prompt file found: /tmp/gh-aw/threat-detection/aw-prompts/prompt.txt (6102 bytes)
+2026-02-27T01:44:53.8470870Z Agent output file found: /tmp/gh-aw/threat-detection/agent_output.json (1301 bytes)
+2026-02-27T01:44:53.8505589Z Threat detection setup completed

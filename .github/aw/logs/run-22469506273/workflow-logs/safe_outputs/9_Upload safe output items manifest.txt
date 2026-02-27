@@ -1,0 +1,25 @@
+﻿2026-02-27T02:01:43.4656635Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+2026-02-27T02:01:43.4659932Z with:
+2026-02-27T02:01:43.4660860Z   name: safe-output-items
+2026-02-27T02:01:43.4662023Z   path: /tmp/safe-output-items.jsonl
+2026-02-27T02:01:43.4665439Z   if-no-files-found: warn
+2026-02-27T02:01:43.4666582Z   compression-level: 6
+2026-02-27T02:01:43.4667915Z   overwrite: false
+2026-02-27T02:01:43.4670492Z   include-hidden-files: false
+2026-02-27T02:01:43.4671653Z env:
+2026-02-27T02:01:43.4672526Z   GH_AW_ENGINE_ID: copilot
+2026-02-27T02:01:43.4675024Z   GH_AW_WORKFLOW_ID: continuous-triage
+2026-02-27T02:01:43.4676428Z   GH_AW_WORKFLOW_NAME: Continuous Triage
+2026-02-27T02:01:43.4678838Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/safeoutputs/agent_output.json
+2026-02-27T02:01:43.4681674Z ##[endgroup]
+2026-02-27T02:01:43.7642785Z With the provided path, there will be 1 file uploaded
+2026-02-27T02:01:43.7654424Z Artifact name is valid!
+2026-02-27T02:01:43.7659969Z Root directory input is valid!
+2026-02-27T02:01:43.8805036Z Beginning upload of artifact content to blob storage
+2026-02-27T02:01:44.0141949Z Uploaded bytes 298
+2026-02-27T02:01:44.0326196Z Finished uploading artifact content to blob storage!
+2026-02-27T02:01:44.0373022Z SHA256 digest of uploaded artifact zip is 47e8eb7f3b27da6ae7eafa2fb93170afa918bf7ef90e0b88100c6d68dd792b4e
+2026-02-27T02:01:44.0375423Z Finalizing artifact upload
+2026-02-27T02:01:44.1421265Z Artifact safe-output-items.zip successfully finalized. Artifact ID 5683644182
+2026-02-27T02:01:44.1428218Z Artifact safe-output-items has been successfully uploaded! Final size is 298 bytes. Artifact ID is 5683644182
+2026-02-27T02:01:44.1439520Z Artifact download URL: https://github.com/AndressaSiqueira/coding/actions/runs/22469506273/artifacts/5683644182

@@ -1,0 +1,35 @@
+﻿2026-02-27T02:00:52.5828703Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+2026-02-27T02:00:52.5829625Z with:
+2026-02-27T02:00:52.5829958Z   name: agent_outputs
+2026-02-27T02:00:52.5830507Z   path: /tmp/gh-aw/sandbox/agent/logs/
+/tmp/gh-aw/redacted-urls.log
+
+2026-02-27T02:00:52.5831103Z   if-no-files-found: ignore
+2026-02-27T02:00:52.5831515Z   compression-level: 6
+2026-02-27T02:00:52.5831896Z   overwrite: false
+2026-02-27T02:00:52.5832253Z   include-hidden-files: false
+2026-02-27T02:00:52.5832666Z env:
+2026-02-27T02:00:52.5832980Z   DEFAULT_BRANCH: main
+2026-02-27T02:00:52.5833362Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T02:00:52.5834015Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T02:00:52.5834398Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T02:00:52.5834882Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T02:00:52.5835511Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T02:00:52.5836223Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T02:00:52.5836984Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T02:00:52.5837633Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T02:00:52.5838201Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T02:00:52.5838715Z ##[endgroup]
+2026-02-27T02:00:52.7405944Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-02-27T02:00:52.7408560Z The least common ancestor is /tmp/gh-aw. This will be the root directory of the artifact
+2026-02-27T02:00:52.7409706Z With the provided path, there will be 1 file uploaded
+2026-02-27T02:00:52.7414679Z Artifact name is valid!
+2026-02-27T02:00:52.7415594Z Root directory input is valid!
+2026-02-27T02:00:53.0000100Z Beginning upload of artifact content to blob storage
+2026-02-27T02:00:53.4001899Z Uploaded bytes 28803
+2026-02-27T02:00:53.4753214Z Finished uploading artifact content to blob storage!
+2026-02-27T02:00:53.4754445Z SHA256 digest of uploaded artifact zip is f9645b33f9520a72e7f89d971348c961971fad49259695d30b270dd7dc9566f1
+2026-02-27T02:00:53.4756238Z Finalizing artifact upload
+2026-02-27T02:00:53.8135804Z Artifact agent_outputs.zip successfully finalized. Artifact ID 5683636416
+2026-02-27T02:00:53.8136985Z Artifact agent_outputs has been successfully uploaded! Final size is 28803 bytes. Artifact ID is 5683636416
+2026-02-27T02:00:53.8141052Z Artifact download URL: https://github.com/AndressaSiqueira/coding/actions/runs/22469506273/artifacts/5683636416

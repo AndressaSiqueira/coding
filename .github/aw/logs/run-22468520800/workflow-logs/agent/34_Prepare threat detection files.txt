@@ -1,0 +1,29 @@
+﻿2026-02-27T01:44:53.7342985Z ##[group]Run mkdir -p /tmp/gh-aw/threat-detection/aw-prompts
+2026-02-27T01:44:53.7343454Z [36;1mmkdir -p /tmp/gh-aw/threat-detection/aw-prompts[0m
+2026-02-27T01:44:53.7344011Z [36;1mcp /tmp/gh-aw/aw-prompts/prompt.txt /tmp/gh-aw/threat-detection/aw-prompts/prompt.txt 2>/dev/null || true[0m
+2026-02-27T01:44:53.7344711Z [36;1mcp /tmp/gh-aw/agent_output.json /tmp/gh-aw/threat-detection/agent_output.json 2>/dev/null || true[0m
+2026-02-27T01:44:53.7345190Z [36;1mfor f in /tmp/gh-aw/aw-*.patch; do[0m
+2026-02-27T01:44:53.7345569Z [36;1m  [ -f "$f" ] && cp "$f" /tmp/gh-aw/threat-detection/ 2>/dev/null || true[0m
+2026-02-27T01:44:53.7345914Z [36;1mdone[0m
+2026-02-27T01:44:53.7346172Z [36;1mecho "Prepared threat detection files:"[0m
+2026-02-27T01:44:53.7346715Z [36;1mls -la /tmp/gh-aw/threat-detection/ 2>/dev/null || true[0m
+2026-02-27T01:44:53.7370047Z shell: /usr/bin/bash -e {0}
+2026-02-27T01:44:53.7370313Z env:
+2026-02-27T01:44:53.7370527Z   DEFAULT_BRANCH: main
+2026-02-27T01:44:53.7370762Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:44:53.7371060Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:44:53.7371296Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:44:53.7371588Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:44:53.7371968Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:44:53.7372373Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:44:53.7372793Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:44:53.7373168Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:44:53.7373490Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T01:44:53.7373776Z ##[endgroup]
+2026-02-27T01:44:53.7456020Z Prepared threat detection files:
+2026-02-27T01:44:53.7467221Z total 20
+2026-02-27T01:44:53.7467642Z drwxr-xr-x  3 runner runner 4096 Feb 27 01:44 .
+2026-02-27T01:44:53.7468130Z drwxr-xr-x 10 runner runner 4096 Feb 27 01:44 ..
+2026-02-27T01:44:53.7468536Z -rw-r--r--  1 runner runner 1301 Feb 27 01:44 agent_output.json
+2026-02-27T01:44:53.7469054Z -rw-r--r--  1 runner runner 1193 Feb 27 01:44 aw-feat-add-observability-knowledge-area.patch
+2026-02-27T01:44:53.7469789Z drwxr-xr-x  2 runner runner 4096 Feb 27 01:44 aw-prompts

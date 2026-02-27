@@ -1,0 +1,23 @@
+﻿2026-02-27T01:59:51.9032249Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:59:51.9032922Z with:
+2026-02-27T01:59:51.9034113Z   script: const { generateWorkflowOverview } = require('/opt/gh-aw/actions/generate_workflow_overview.cjs');
+await generateWorkflowOverview(core);
+
+2026-02-27T01:59:51.9035576Z   github-token: ***
+2026-02-27T01:59:51.9035920Z   debug: false
+2026-02-27T01:59:51.9036266Z   user-agent: actions/github-script
+2026-02-27T01:59:51.9036708Z   result-encoding: json
+2026-02-27T01:59:51.9037055Z   retries: 0
+2026-02-27T01:59:51.9037430Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:59:51.9037919Z env:
+2026-02-27T01:59:51.9038221Z   DEFAULT_BRANCH: main
+2026-02-27T01:59:51.9038656Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:59:51.9039292Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:59:51.9039667Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:59:51.9040156Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:59:51.9040787Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:59:51.9041571Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:59:51.9042354Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:59:51.9043005Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:59:51.9043464Z ##[endgroup]
+2026-02-27T01:59:51.9813808Z Generated workflow overview in step summary

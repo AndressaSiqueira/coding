@@ -1,0 +1,17 @@
+﻿2026-02-27T01:44:53.8662448Z ##[group]Run mkdir -p /tmp/gh-aw/threat-detection
+2026-02-27T01:44:53.8662867Z [36;1mmkdir -p /tmp/gh-aw/threat-detection[0m
+2026-02-27T01:44:53.8663236Z [36;1mtouch /tmp/gh-aw/threat-detection/detection.log[0m
+2026-02-27T01:44:53.8692564Z shell: /usr/bin/bash -e {0}
+2026-02-27T01:44:53.8692873Z env:
+2026-02-27T01:44:53.8693077Z   DEFAULT_BRANCH: main
+2026-02-27T01:44:53.8693331Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T01:44:53.8693581Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T01:44:53.8693818Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T01:44:53.8694128Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T01:44:53.8694505Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T01:44:53.8694948Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T01:44:53.8695374Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T01:44:53.8695751Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T01:44:53.8696078Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T01:44:53.8696460Z   GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
+2026-02-27T01:44:53.8696852Z ##[endgroup]

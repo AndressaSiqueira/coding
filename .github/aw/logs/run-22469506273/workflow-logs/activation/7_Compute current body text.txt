@@ -1,0 +1,18 @@
+﻿2026-02-27T01:59:05.8971011Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:59:05.8971899Z with:
+2026-02-27T01:59:05.8973219Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/compute_text.cjs');
+await main();
+
+2026-02-27T01:59:05.8974914Z   github-token: ***
+2026-02-27T01:59:05.8975333Z   debug: false
+2026-02-27T01:59:05.8975883Z   user-agent: actions/github-script
+2026-02-27T01:59:05.8976406Z   result-encoding: json
+2026-02-27T01:59:05.8976828Z   retries: 0
+2026-02-27T01:59:05.8977263Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:59:05.8977817Z ##[endgroup]
+2026-02-27T01:59:06.2120269Z Repository permission level: admin
+2026-02-27T01:59:06.2158460Z text: O agent precisa de uma Knowledge Area de observabilidade
+2026-02-27T01:59:06.2199396Z title: O agent precisa de uma Knowledge Area de observabilidade
+2026-02-27T01:59:06.2202459Z body: 

@@ -1,0 +1,19 @@
+﻿2026-02-27T01:46:17.1119066Z ##[group]Run actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+2026-02-27T01:46:17.1120453Z with:
+2026-02-27T01:46:17.1121836Z   github-token: ***
+2026-02-27T01:46:17.1124373Z   script: const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
+setupGlobals(core, github, context, exec, io);
+const { main } = require('/opt/gh-aw/actions/handle_create_pr_error.cjs');
+await main();
+
+2026-02-27T01:46:17.1127366Z   debug: false
+2026-02-27T01:46:17.1128077Z   user-agent: actions/github-script
+2026-02-27T01:46:17.1128961Z   result-encoding: json
+2026-02-27T01:46:17.1129676Z   retries: 0
+2026-02-27T01:46:17.1130421Z   retry-exempt-status-codes: 400,401,403,404,422
+2026-02-27T01:46:17.1131646Z env:
+2026-02-27T01:46:17.1132481Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/safeoutputs/agent_output.json
+2026-02-27T01:46:17.1133631Z   GH_AW_WORKFLOW_NAME: Continuous Triage
+2026-02-27T01:46:17.1134939Z   GH_AW_RUN_URL: https://github.com/AndressaSiqueira/coding/actions/runs/22468520800
+2026-02-27T01:46:17.1136281Z ##[endgroup]
+2026-02-27T01:46:17.1982298Z No create_pull_request error message - skipping

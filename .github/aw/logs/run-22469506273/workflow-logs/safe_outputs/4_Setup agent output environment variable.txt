@@ -1,0 +1,11 @@
+﻿2026-02-27T02:01:41.4221504Z ##[group]Run mkdir -p /tmp/gh-aw/safeoutputs/
+2026-02-27T02:01:41.4222313Z [36;1mmkdir -p /tmp/gh-aw/safeoutputs/[0m
+2026-02-27T02:01:41.4222968Z [36;1mfind "/tmp/gh-aw/safeoutputs/" -type f -print[0m
+2026-02-27T02:01:41.4223861Z [36;1mecho "GH_AW_AGENT_OUTPUT=/tmp/gh-aw/safeoutputs/agent_output.json" >> "$GITHUB_ENV"[0m
+2026-02-27T02:01:41.4230124Z shell: /usr/bin/bash -e {0}
+2026-02-27T02:01:41.4230628Z env:
+2026-02-27T02:01:41.4231006Z   GH_AW_ENGINE_ID: copilot
+2026-02-27T02:01:41.4231508Z   GH_AW_WORKFLOW_ID: continuous-triage
+2026-02-27T02:01:41.4232065Z   GH_AW_WORKFLOW_NAME: Continuous Triage
+2026-02-27T02:01:41.4232638Z ##[endgroup]
+2026-02-27T02:01:41.4302961Z /tmp/gh-aw/safeoutputs/agent_output.json

@@ -1,0 +1,25 @@
+[2026-02-27T01:43:21Z] [DEBUG] [backend] GetOrLaunch called for server: github
+[2026-02-27T01:43:21Z] [INFO] [backend] Launching MCP backend server: github, command=docker, args=[run --rm -i -e NO_COLOR=... -e TERM=... -e PYTHONUNBUFFERED=... -e GITHUB_TOOLSETS=cont... -e GITHUB_LOCKDOWN_MODE=... -e GITHUB_PERSONAL_ACCESS_TOKEN=ghs_... -e GITHUB_READ_ONLY=... ghcr.io/github/github-mcp-server:v0.31.0]
+[2026-02-27T01:43:21Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:21.246Z level=INFO msg="starting server" version=v0.31.0 host="" dynamicToolsets=false readOnly=true lockdownEnabled=false
+[2026-02-27T01:43:21Z] [INFO] [backend] [stderr] GitHub MCP Server running on stdio
+[2026-02-27T01:43:21Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:21.247Z level=INFO msg="server run start"
+[2026-02-27T01:43:21Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:21.247Z level=INFO msg="server connecting"
+[2026-02-27T01:43:21Z] [INFO] [backend] Successfully launched MCP backend server: github
+[2026-02-27T01:43:21Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:21.247Z level=INFO msg="server session connected" session_id=""
+[2026-02-27T01:43:21Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:21.249Z level=INFO msg="session initialized"
+[2026-02-27T01:43:21Z] [INFO] [backend] Successfully registered tools from github (took 252.623865ms)
+[2026-02-27T01:43:41Z] [DEBUG] [backend] GetOrLaunchForSession called: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:43:41Z] [INFO] [backend] Launching MCP backend server for session: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7, command=docker, args=[run --rm -i -e NO_COLOR=... -e TERM=... -e PYTHONUNBUFFERED=... -e GITHUB_TOOLSETS=cont... -e GITHUB_LOCKDOWN_MODE=... -e GITHUB_PERSONAL_ACCESS_TOKEN=ghs_... -e GITHUB_READ_ONLY=... ghcr.io/github/github-mcp-server:v0.31.0]
+[2026-02-27T01:43:41Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:41.799Z level=INFO msg="starting server" version=v0.31.0 host="" dynamicToolsets=false readOnly=true lockdownEnabled=false
+[2026-02-27T01:43:41Z] [INFO] [backend] [stderr] GitHub MCP Server running on stdio
+[2026-02-27T01:43:41Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:41.801Z level=INFO msg="server run start"
+[2026-02-27T01:43:41Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:41.801Z level=INFO msg="server connecting"
+[2026-02-27T01:43:41Z] [INFO] [backend] Successfully launched MCP backend server for session: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:43:41Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:41.801Z level=INFO msg="server session connected" session_id=""
+[2026-02-27T01:43:41Z] [INFO] [backend] [stderr] time=2026-02-27T01:43:41.803Z level=INFO msg="session initialized"
+[2026-02-27T01:43:53Z] [DEBUG] [backend] GetOrLaunchForSession called: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:43:53Z] [DEBUG] [backend] Reusing session connection: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:44:02Z] [DEBUG] [backend] GetOrLaunchForSession called: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:44:02Z] [DEBUG] [backend] Reusing session connection: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:44:02Z] [DEBUG] [backend] GetOrLaunchForSession called: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7
+[2026-02-27T01:44:02Z] [DEBUG] [backend] Reusing session connection: server=github, session=PWK8poy8r99OHv6c9IW53qzyGARcHPXgow5HbaViycBzqwufHy6rsyzpYu7

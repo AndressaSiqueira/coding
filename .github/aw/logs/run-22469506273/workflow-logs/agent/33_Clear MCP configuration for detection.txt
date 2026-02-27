@@ -1,0 +1,17 @@
+﻿2026-02-27T02:00:55.5647396Z ##[group]Run rm -f /tmp/gh-aw/mcp-config/mcp-servers.json
+2026-02-27T02:00:55.5647869Z [36;1mrm -f /tmp/gh-aw/mcp-config/mcp-servers.json[0m
+2026-02-27T02:00:55.5648274Z [36;1mrm -f /home/runner/.copilot/mcp-config.json[0m
+2026-02-27T02:00:55.5648656Z [36;1mrm -f "$GITHUB_WORKSPACE/.gemini/settings.json"[0m
+2026-02-27T02:00:55.5692732Z shell: /usr/bin/bash -e {0}
+2026-02-27T02:00:55.5693001Z env:
+2026-02-27T02:00:55.5693205Z   DEFAULT_BRANCH: main
+2026-02-27T02:00:55.5693452Z   GH_AW_ASSETS_ALLOWED_EXTS: 
+2026-02-27T02:00:55.5693721Z   GH_AW_ASSETS_BRANCH: 
+2026-02-27T02:00:55.5693958Z   GH_AW_ASSETS_MAX_SIZE_KB: 0
+2026-02-27T02:00:55.5694262Z   GH_AW_MCP_LOG_DIR: /tmp/gh-aw/mcp-logs/safeoutputs
+2026-02-27T02:00:55.5694659Z   GH_AW_SAFE_OUTPUTS: /opt/gh-aw/safeoutputs/outputs.jsonl
+2026-02-27T02:00:55.5695089Z   GH_AW_SAFE_OUTPUTS_CONFIG_PATH: /opt/gh-aw/safeoutputs/config.json
+2026-02-27T02:00:55.5695541Z   GH_AW_SAFE_OUTPUTS_TOOLS_PATH: /opt/gh-aw/safeoutputs/tools.json
+2026-02-27T02:00:55.5695925Z   GH_AW_WORKFLOW_ID_SANITIZED: continuoustriage
+2026-02-27T02:00:55.5696296Z   GH_AW_AGENT_OUTPUT: /tmp/gh-aw/agent_output.json
+2026-02-27T02:00:55.5696609Z ##[endgroup]
