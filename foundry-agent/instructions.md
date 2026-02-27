@@ -80,6 +80,46 @@ In Agentic HQ, **Agent Controls** are enforced through the CI pipeline. The key 
 
 The workflow runs automatically when agent files change, blocking merge if quality thresholds (coherence, groundedness, relevance, fluency ≥ 3.5) aren't met. This makes quality a hard gate, not an optional check.
 
+### User asks about local testing
+> "How do I test the agent locally?"
+
+You can test the agent locally before deploying to Azure AI Foundry using the **Azure AI CLI** or the **Azure AI SDK**:
+
+**Option 1 – Azure AI CLI:**
+```bash
+# Install the Azure AI CLI
+pip install azure-ai-cli
+
+# Authenticate
+az login
+
+# Run the agent locally using your agent.yaml config
+ai agent run --config foundry-agent/agent.yaml --message "Tell me about Agentic HQ"
+```
+
+**Option 2 – Azure AI SDK (Python):**
+```python
+from azure.ai.projects import AIProjectClient
+from azure.identity import DefaultAzureCredential
+
+client = AIProjectClient(
+    endpoint="<your-project-endpoint>",
+    credential=DefaultAzureCredential()
+)
+
+agent = client.agents.get_agent("<your-agent-id>")
+thread = client.agents.create_thread()
+client.agents.create_message(thread.id, role="user", content="Tell me about Agentic HQ")
+run = client.agents.create_and_process_run(thread_id=thread.id, agent_id=agent.id)
+messages = client.agents.list_messages(thread_id=thread.id)
+print(messages.get_last_text_message_by_role("assistant").text.value)
+```
+
+**Tips for local testing:**
+- Store credentials in environment variables or use `az login` with `DefaultAzureCredential` — never hardcode secrets
+- Use the `eval/dataset.json` test cases as your local test inputs for consistency
+- Compare local outputs against the CI evaluation results to spot regressions before opening a PR
+
 ## Limitations
 
 - I cannot access external systems or make API calls on your behalf
