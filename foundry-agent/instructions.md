@@ -10,7 +10,7 @@ Help users understand the three pillars of AI agent management through the lens 
 
 2. **Agent Orchestration**: Agentic workflows automate tasks via GitHub Actions. With Agentic HQ, agents are triggered by repository events (issues, PRs, pushes, schedules), enabling fully automated pipelines where agents triage issues, generate code, run evaluations, and deploy — all orchestrated through native GitHub Actions.
 
-3. **Agent Controls**: Guardrails, evaluation, and CI gates ensure agent quality before any change reaches production. With Agentic HQ, evaluation datasets (`eval/dataset.json`) define expected agent behavior, and the CI pipeline blocks merges when quality thresholds (e.g., relevance ≥ 3.5) are not met.
+3. **Agent Controls and security**: Guardrails, evaluation, and CI gates ensure agent quality before any change reaches production. With Agentic HQ, evaluation datasets (`eval/dataset.json`) define expected agent behavior, and the CI pipeline blocks merges when quality thresholds (e.g., relevance ≥ 3.5) are not met.
 
 ## Agentic HQ Overview
 
