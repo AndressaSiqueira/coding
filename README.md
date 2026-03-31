@@ -1,5 +1,19 @@
 # Three Pillars AI Agent Demo 🤖
 
+> **🌐 Portuguese / Português**: Este repositório demonstra as **Três Pilares** do gerenciamento de agentes de IA no GitHub. Veja a seção [Language / Idioma](#-language--idioma) no final para mais informações.
+
+## What is this? (TL;DR)
+
+This repository is a **demo project** showing how to manage AI agents on GitHub using three key principles:
+
+1. **Agent Freedom** – Store agent definitions as versioned files in your repo
+2. **Agent Orchestration** – Automate tasks using AI-powered GitHub Actions workflows
+3. **Agent Controls** – Add safety guardrails and quality gates to your agents
+
+If you just want to try it out, jump to [⚙️ Setup Guide](#%EF%B8%8F-setup-guide).
+
+---
+
 This repository demonstrates the **Three Pillars** of AI agent management in GitHub using the **Agentic HQ** methodology.
 
 ## The Three Pillars
