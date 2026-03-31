@@ -290,7 +290,51 @@ This project is open source. See the repository for license details.
 
 ## 🌐 Language / Idioma
 
-This documentation is available in English. Para documentação em português, sinta-se à vontade para abrir uma issue solicitando tradução.
+This documentation is available in English and Portuguese below.
+
+---
+
+## 🇧🇷 Resumo em Português
+
+### O que é este projeto?
+
+Este repositório demonstra os **Três Pilares** do gerenciamento de agentes de IA no GitHub usando a metodologia **Agentic HQ**.
+
+### Os Três Pilares
+
+| Pilar | Descrição |
+|-------|-----------|
+| 🔓 **Liberdade do Agente** | Agentes personalizados como ativos versionados no repositório (em `.github/agents/`) |
+| 🎯 **Orquestração do Agente** | Automação inteligente via GitHub Actions (ex: triagem automática de issues) |
+| 🛡️ **Controles do Agente** | Guardrails, avaliação e gates de CI/CD para garantir qualidade |
+
+### Como começar
+
+1. **Clone o repositório**: `git clone https://github.com/AndressaSiqueira/coding.git`
+2. **Configure os segredos do Azure** (veja a seção [🔑 Required Secrets](#-required-secrets))
+3. **Abra uma issue** para ver a triagem automática em ação
+4. **Faça uma alteração** em `foundry-agent/instructions.md` e envie para `main` para ver o deploy automático
+
+### Estrutura do Repositório
+
+| Pasta/Arquivo | Descrição |
+|---------------|-----------|
+| `.github/agents/` | Definições dos agentes de IA (docs-agent, devops-agent) |
+| `.github/workflows/` | Workflows de automação (triagem, deploy) |
+| `foundry-agent/` | Configuração do agente Azure AI Foundry |
+| `README.md` | Esta documentação |
+
+### Pré-requisitos
+
+- Conta no GitHub com Actions habilitado
+- Assinatura do Azure com acesso ao AI Foundry
+- (Opcional) Azure CLI instalado localmente
+
+### Solução de Problemas Comuns
+
+- **Workflow não dispara**: Verifique se o Actions está habilitado nas configurações do repositório
+- **Deploy falha**: Confirme que todos os segredos `AZURE_*` estão configurados corretamente
+- **Dúvidas**: Abra uma issue com a tag `question`
 
 ---
 
